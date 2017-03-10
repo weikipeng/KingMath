@@ -163,6 +163,12 @@ public class SunPower {
 
         float selfUse = annualPowerGeneration * selfUsePercent;
 
+        System.out.println("getProfitsUseSelf selfUse:" + selfUse +
+                " remain:" + (annualPowerGeneration - selfUse));
+
+        double aim = 2043.86 * (0.538 + 0.42 + 0.1) + 875.94 * (0.42 + 0.1 + 0.4153);
+        System.out.println("aim:" + aim);
+
         result = selfUse * (countryElectricityUsePrice + countryAllowance + provinceAllowance)
                 + (annualPowerGeneration - selfUse) * (countryAllowance + provinceAllowance + countryElectricityGridPrice)
         ;
