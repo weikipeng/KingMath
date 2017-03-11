@@ -1,8 +1,8 @@
-package com.pengjunwei.kingmath.mvp;
+package com.pengjunwei.kingmath.mvp.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.pengjunwei.kingmath.R;
+import com.pengjunwei.kingmath.mvp.BaseMVPView;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:30.

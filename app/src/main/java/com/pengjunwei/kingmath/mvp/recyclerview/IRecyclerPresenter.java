@@ -1,4 +1,4 @@
-package com.pengjunwei.kingmath.mvp;
+package com.pengjunwei.kingmath.mvp.recyclerview;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:34.

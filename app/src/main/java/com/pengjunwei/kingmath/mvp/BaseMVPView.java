@@ -1,12 +1,15 @@
 package com.pengjunwei.kingmath.mvp;
 
-import android.support.annotation.IdRes;
-import android.view.View;
-
 /**
  * Created by WikiPeng on 2017/3/11 15:30.
  */
-public class BaseMVPView implements IView{
+public class BaseMVPView implements IView {
+
+    protected IMVPProvider provider;
+
+    public BaseMVPView(IMVPProvider provider) {
+        this.provider = provider;
+    }
 
 //    @Override
 //    public <VT extends View> VT findViewById(@IdRes int id) {
@@ -17,4 +20,8 @@ public class BaseMVPView implements IView{
 //    public <VT extends View> VT findViewByIdInAll(@IdRes int id) {
 //        return supporter.findViewByIdInAll(id);
 //    }
+
+    IMVPProvider getMVPProvider() {
+        return provider;
+    }
 }
