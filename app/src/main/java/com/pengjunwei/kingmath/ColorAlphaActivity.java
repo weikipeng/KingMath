@@ -18,11 +18,11 @@ import android.widget.Toast;
  */
 public class ColorAlphaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public EditText mAlphaValue;
-    public Button   mButton;
-    public TextView mResult;
+    protected EditText mAlphaValue;
+    protected Button   mButton;
+    protected TextView mResult;
 
-    public LinearLayout mTabLayout;
+    protected LinearLayout mTabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

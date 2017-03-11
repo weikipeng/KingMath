@@ -1,5 +1,8 @@
 package com.pengjunwei.kingmath.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 光伏计算
  * <p>
@@ -174,5 +177,52 @@ public class SunPower {
         ;
 
         return result;
+    }
+
+    transient protected List<FactorInfo> factorInfoList;
+
+    public List<FactorInfo> getFactorInfoList() {
+
+        if (factorInfoList == null) {
+            factorInfoList = new ArrayList<>();
+
+
+            factorInfoList.add(new FactorInfo("每块多晶硅板面积:", String.valueOf(polysiliconPlateArea), "平方米"));
+            factorInfoList.add(new FactorInfo("额定功率:", String.valueOf(ratedPower), "瓦"));
+            factorInfoList.add(new FactorInfo("单价 成本价:", String.valueOf(unitPriceCost), "元/瓦"));
+            factorInfoList.add(new FactorInfo("单价 市场价:", String.valueOf(unitPriceMarket), "元/瓦"));
+
+            factorInfoList.add(new FactorInfo("年发电量系数因子:", String.valueOf(factorAnnualPowerGeneration), ""));
+
+            factorInfoList.add(new FactorInfo("国家上网电价:", String.valueOf(countryElectricityGridPrice), "元/度"));
+            factorInfoList.add(new FactorInfo("使用电价:", String.valueOf(countryElectricityUsePrice), "元/度"));
+            factorInfoList.add(new FactorInfo("国家补贴:", String.valueOf(countryAllowance), "元/度"));
+            factorInfoList.add(new FactorInfo("省补贴:", String.valueOf(provinceAllowance), "元/度"));
+            factorInfoList.add(new FactorInfo("银行贷款利率:", String.valueOf(bankAnnualInterestRate), "%"));
+            factorInfoList.add(new FactorInfo("银行贷款周期:", String.valueOf(bankLoanCycle), "年"));
+
+            factorInfoList.add(new FactorInfo("自用比例:", String.valueOf(selfUsePercent * 100), "%"));
+        }
+
+        return factorInfoList;
+    }
+
+    transient protected List<ResultShowInfo> resultInfoList;
+
+    public List<ResultShowInfo> getResultInfoList() {
+        if (resultInfoList == null) {
+            resultInfoList = new ArrayList<>();
+        }else{
+            resultInfoList.clear();
+        }
+
+        resultInfoList.add(new ResultShowInfo("装机容量:", String.valueOf(getInstalledCapacity()), "瓦"));
+        resultInfoList.add(new ResultShowInfo("年发电量:", String.valueOf(getAnnualPowerGeneration()), "度"));
+        resultInfoList.add(new ResultShowInfo("投资造价:", String.valueOf(getInvestmentCost()), "元"));
+        resultInfoList.add(new ResultShowInfo("全额上网收益:", String.valueOf(getProfitsAllPush()), "元"));
+        resultInfoList.add(new ResultShowInfo("自发自用余电上网（" +
+                (selfUsePercent * 100) + "%自用）:", String.valueOf(getProfitsUseSelf()), "元"));
+
+        return resultInfoList;
     }
 }
