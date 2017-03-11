@@ -9,7 +9,7 @@ import com.pengjunwei.kingmath.sunpower.SunPowerPresenter;
  * Created by WikiPeng on 2017/3/10 14:58.
  */
 public class MainActivity extends BaseMVPActivity {
-
+    public static final String EXTRA_DATA = "data";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

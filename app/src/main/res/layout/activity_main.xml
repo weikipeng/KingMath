@@ -27,13 +27,13 @@
             android:text="请输入多晶硅板数量:"/>
 
         <EditText
-            android:id="@+id/alphaValue"
+            android:id="@+id/number"
             style="@style/TextView"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="number"
-            android:maxLength="2"
+            android:maxLength="5"
             android:maxLines="1"/>
 
         <Button
@@ -46,9 +46,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@id/recyclerView"
-        android:layout_above="@id/calculateLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/calculateLayout"/>
 
     <!--<TextView-->
     <!--android:id="@+id/resultText"-->

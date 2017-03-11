@@ -4,24 +4,24 @@ package com.pengjunwei.kingmath.mvp;
  * Created by WikiPeng on 2017/3/11 15:30.
  */
 public class BaseMVPView implements IView {
-
+    protected IPresenter   presenter;
     protected IMVPProvider provider;
 
     public BaseMVPView(IMVPProvider provider) {
         this.provider = provider;
     }
 
-//    @Override
-//    public <VT extends View> VT findViewById(@IdRes int id) {
-//        return supporter.findViewById(id);
-//    }
-//
-//    @Override
-//    public <VT extends View> VT findViewByIdInAll(@IdRes int id) {
-//        return supporter.findViewByIdInAll(id);
-//    }
+    public <T extends IPresenter> BaseMVPView(IMVPProvider provider, T presenter) {
+        this.provider = provider;
+        this.presenter = presenter;
+    }
 
     IMVPProvider getMVPProvider() {
         return provider;
+    }
+
+    @Override
+    public <T extends IPresenter> void setPresenter(T presenter) {
+        this.presenter = presenter;
     }
 }

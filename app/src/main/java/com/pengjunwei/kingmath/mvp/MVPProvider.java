@@ -2,7 +2,9 @@ package com.pengjunwei.kingmath.mvp;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:38.
@@ -41,5 +43,25 @@ public class MVPProvider implements IMVPProvider {
     @Override
     public <VT extends View> VT findViewByIdInAll(@IdRes int id) {
         return (VT) mActivity.findViewById(id);
+    }
+
+    /**
+     * 显示Toast
+     *
+     * @param text
+     */
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示Toast
+     *
+     * @param textResId
+     */
+    @Override
+    public void showToast(@StringRes int textResId) {
+        Toast.makeText(mActivity, textResId, Toast.LENGTH_SHORT).show();
     }
 }

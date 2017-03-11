@@ -1,33 +1,34 @@
 package com.pengjunwei.kingmath.sunpower;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.mvp.IMVPProvider;
+import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerMVPView;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:42.
  */
 public class SunPowerView extends BaseRecyclerMVPView implements View.OnClickListener {
-    protected EditText mAlphaValue;
+    protected EditText mNumber;
     protected Button   mButton;
 
-//    protected LinearLayout mTabLayout;
-
-    public SunPowerView(IMVPProvider mvpProvider) {
-        super(mvpProvider);
+    public SunPowerView(IMVPProvider provider) {
+        super(provider);
     }
 
+    public <T extends IPresenter> SunPowerView(IMVPProvider provider, T presenter) {
+        super(provider, presenter);
+    }
 
     protected void initView() {
         super.initView();
-        mAlphaValue = provider.findViewById(R.id.alphaValue);
+        mNumber = provider.findViewById(R.id.number);
         mButton = provider.findViewById(R.id.doAction);
-//        mResult = (TextView) findViewById(R.id.resultText);
-//        mTabLayout = provider.findViewById(R.id.tabLayout);
     }
 
     protected void addEvent() {
@@ -39,8 +40,24 @@ public class SunPowerView extends BaseRecyclerMVPView implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.doAction:
-//                calculateAlpha();
+                calculateSunPower();
                 break;
+        }
+    }
+
+    protected void calculateSunPower() {
+        String valueText = mNumber.getText().toString();
+        if (TextUtils.isEmpty(valueText)) {
+            provider.showToast(R.string.tips_info_empty);
+            return;
+        }
+        if (!TextUtils.isDigitsOnly(valueText)) {
+            provider.showToast(R.string.tips_info_not_number);
+            return;
+        }
+
+        if (presenter instanceof ISunPowerPresenter) {
+            ((ISunPowerPresenter) presenter).calculateSunPower(Integer.parseInt(valueText));
         }
     }
 }

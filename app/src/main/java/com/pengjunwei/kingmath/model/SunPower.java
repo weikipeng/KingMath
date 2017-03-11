@@ -1,5 +1,8 @@
 package com.pengjunwei.kingmath.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ import java.util.List;
  * <p>
  * Created by WikiPeng on 2017/3/10 15:51.
  */
-public class SunPower {
+public class SunPower implements Parcelable {
 
     /**
      * 每块多晶硅板面积
@@ -225,4 +228,57 @@ public class SunPower {
 
         return resultInfoList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(this.polysiliconPlateArea);
+        dest.writeInt(this.ratedPower);
+        dest.writeFloat(this.unitPriceCost);
+        dest.writeFloat(this.unitPriceMarket);
+        dest.writeFloat(this.factorAnnualPowerGeneration);
+        dest.writeFloat(this.countryElectricityGridPrice);
+        dest.writeFloat(this.countryElectricityUsePrice);
+        dest.writeFloat(this.countryAllowance);
+        dest.writeFloat(this.provinceAllowance);
+        dest.writeFloat(this.bankAnnualInterestRate);
+        dest.writeInt(this.bankLoanCycle);
+        dest.writeFloat(this.selfUsePercent);
+        dest.writeInt(this.number);
+    }
+
+    public SunPower() {
+    }
+
+    protected SunPower(Parcel in) {
+        this.polysiliconPlateArea = in.readFloat();
+        this.ratedPower = in.readInt();
+        this.unitPriceCost = in.readFloat();
+        this.unitPriceMarket = in.readFloat();
+        this.factorAnnualPowerGeneration = in.readFloat();
+        this.countryElectricityGridPrice = in.readFloat();
+        this.countryElectricityUsePrice = in.readFloat();
+        this.countryAllowance = in.readFloat();
+        this.provinceAllowance = in.readFloat();
+        this.bankAnnualInterestRate = in.readFloat();
+        this.bankLoanCycle = in.readInt();
+        this.selfUsePercent = in.readFloat();
+        this.number = in.readInt();
+    }
+
+    public static final Parcelable.Creator<SunPower> CREATOR = new Parcelable.Creator<SunPower>() {
+        @Override
+        public SunPower createFromParcel(Parcel source) {
+            return new SunPower(source);
+        }
+
+        @Override
+        public SunPower[] newArray(int size) {
+            return new SunPower[size];
+        }
+    };
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.mvp.BaseMVPView;
 import com.pengjunwei.kingmath.mvp.IMVPProvider;
+import com.pengjunwei.kingmath.mvp.IPresenter;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:30.
@@ -14,7 +15,11 @@ public class BaseRecyclerMVPView extends BaseMVPView implements IRecyclerView {
     protected RecyclerView mRecyclerView;
 
     public BaseRecyclerMVPView(IMVPProvider provider) {
-        super(provider);
+        this(provider, null);
+    }
+
+    public <T extends IPresenter> BaseRecyclerMVPView(IMVPProvider provider, T presenter) {
+        super(provider, presenter);
         initView();
         initData();
         addEvent();

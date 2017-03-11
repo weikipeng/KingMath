@@ -2,6 +2,7 @@ package com.pengjunwei.kingmath.mvp;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.view.View;
 
 /**
@@ -13,5 +14,9 @@ public interface IMVPProvider {
     <VT extends View> VT findViewById(@IdRes int id);
 
     <VT extends View> VT findViewByIdInAll(@IdRes int id);
+
+    void showToast(String text);
+
+    void showToast(@StringRes int textResId);
 }
 
