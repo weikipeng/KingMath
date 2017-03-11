@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView textView = new TextView(this);
         textView.setLayoutParams(new LinearLayout
                 .LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setTextColor(getResources().getColor(R.color.colorText));
 
         StringBuilder stringBuilder = new StringBuilder();
 
