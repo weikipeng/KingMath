@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.mvp.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import android.app.Activity;
+import android.content.Intent;
 
 import com.pengjunwei.kingmath.mvp.BasePresenter;
 
@@ -9,4 +10,8 @@ import com.pengjunwei.kingmath.mvp.BasePresenter;
  */
 public class BaseRecyclerPresenter extends BasePresenter implements IRecyclerPresenter {
     protected BaseRecyclerAdapter mAdapter;
+
+    public BaseRecyclerPresenter(Activity activity) {
+        super(activity);
+    }
 }

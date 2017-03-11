@@ -2,23 +2,21 @@ package com.pengjunwei.kingmath;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.pengjunwei.kingmath.model.FactorInfo;
-import com.pengjunwei.kingmath.model.ResultShowInfo;
-
-import java.util.List;
+import com.pengjunwei.kingmath.sunpower.profits.SunPowerProfitsPresenter;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:23.
  */
-public class SunPowerProfitsActivity extends AppCompatActivity {
+public class SunPowerProfitsActivity extends BaseMVPActivity {
     //    protected TextView mResult;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sun_power_profits);
+        mPresenter = new SunPowerProfitsPresenter(this);
+        mPresenter.setIntent(getIntent());
+        mPresenter.refresh(true);
     }
 
 //    protected void calculateAlpha() {

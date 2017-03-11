@@ -7,7 +7,6 @@ import com.pengjunwei.kingmath.MainActivity;
 import com.pengjunwei.kingmath.SunPowerProfitsActivity;
 import com.pengjunwei.kingmath.model.FactorInfo;
 import com.pengjunwei.kingmath.model.SunPower;
-import com.pengjunwei.kingmath.mvp.MVPProvider;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
@@ -23,8 +22,8 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
     protected SunPower mSunPower;
 
     public SunPowerPresenter(Activity activity) {
-        provider = new MVPProvider(activity);
-        mvpView = new SunPowerView(provider,this);
+        super(activity);
+        mvpView = new SunPowerView(provider, this);
 
         initData();
     }
@@ -71,6 +70,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
 
     @Override
     public void calculateSunPower(int number) {
+        mSunPower.setNumber(number);
         Intent intent = new Intent(provider.getActivity(), SunPowerProfitsActivity.class);
         intent.putExtra(MainActivity.EXTRA_DATA, mSunPower);
         provider.getActivity().startActivity(intent);
