@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.viewholder;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerViewHolder;
 
@@ -11,5 +12,10 @@ public class ViewHolderResult extends BaseRecyclerViewHolder {
 
     public ViewHolderResult(View itemView) {
         super(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(int position, Object data) {
+
     }
 }

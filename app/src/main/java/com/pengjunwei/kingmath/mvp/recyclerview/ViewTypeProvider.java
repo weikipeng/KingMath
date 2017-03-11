@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.mvp.recyclerview;
 
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -10,13 +11,22 @@ import java.util.List;
  * Created by WikiPeng on 2017/3/11 16:28.
  */
 public class ViewTypeProvider implements IViewTypeProvider {
-    private static ViewTypeProvider      mInstance;
-    protected      HashMap<Class, Class> classHashMap;
-    protected      List<Class>           classList;
+    private static ViewTypeProvider                mInstance;
+    /**
+     * 从数据类对应 viewholder
+     */
+    protected      HashMap<Class, Class>           classHashMap;
+    /**
+     * 从viewholder 对应layout
+     */
+    protected      HashMap<Class, ILayoutProvider> layoutHashMap;
+
+    protected List<Class> classList;
 
     private ViewTypeProvider() {
         classList = new ArrayList<>();
         classHashMap = new HashMap<>();
+        layoutHashMap = new HashMap<>();
     }
 
     @Override
@@ -30,18 +40,11 @@ public class ViewTypeProvider implements IViewTypeProvider {
 
     @Override
     public BaseRecyclerViewHolder getViewHolder(ViewGroup parent, int viewType) {
-        if (viewType > 0 && viewType < classList.size()) {
-            Class clazz = classList.get(viewType);
-            try {
-                Object object = clazz.newInstance();
-                if (object instanceof BaseRecyclerViewHolder) {
-                    ((BaseRecyclerViewHolder) object).onCreateView(parent);
-                    return (BaseRecyclerViewHolder) object;
-                }
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+        if (viewType >= 0 && viewType < classList.size()) {
+            Class           clazz          = classList.get(viewType);
+            ILayoutProvider layoutProvider = layoutHashMap.get(clazz);
+            if (layoutProvider != null) {
+                return layoutProvider.onCreateViewHolder(LayoutInflater.from(parent.getContext()), parent);
             }
         }
 
@@ -49,8 +52,9 @@ public class ViewTypeProvider implements IViewTypeProvider {
     }
 
     @Override
-    public void register(Class dataClass, Class viewHolderClass) {
+    public void register(Class dataClass, Class viewHolderClass, ILayoutProvider layoutProvider) {
         classHashMap.put(dataClass, viewHolderClass);
+        layoutHashMap.put(viewHolderClass, layoutProvider);
         if (!classList.contains(viewHolderClass)) {
             classList.add(viewHolderClass);
         }

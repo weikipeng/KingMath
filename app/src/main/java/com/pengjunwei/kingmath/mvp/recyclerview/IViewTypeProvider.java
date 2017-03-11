@@ -10,5 +10,5 @@ public interface IViewTypeProvider {
 
     BaseRecyclerViewHolder getViewHolder(ViewGroup parent, int viewType);
 
-    void register(Class dataClass, Class viewHolderClass);
+    void register(Class dataClass, Class viewHolderClass, ILayoutProvider layoutProvider);
 }

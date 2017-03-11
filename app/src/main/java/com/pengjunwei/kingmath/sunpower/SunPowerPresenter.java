@@ -30,7 +30,8 @@ public class SunPowerPresenter extends BaseRecyclerPresenter {
     protected void initData() {
 
         mAdapter = new SunPowerAdapter();
-        mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class);
+        mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class
+                , new ViewHolderFactor.LayoutProvider());
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
         mSunPower = new SunPower();
 
@@ -62,5 +63,6 @@ public class SunPowerPresenter extends BaseRecyclerPresenter {
         super.refresh(isForce);
         mAdapter.clear();
         mAdapter.add(mSunPower.getFactorInfoList());
+        mAdapter.notifyDataSetChanged();
     }
 }
