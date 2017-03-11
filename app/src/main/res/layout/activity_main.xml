@@ -9,20 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/doAction"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:text="计算"/>
-
     <LinearLayout
         android:id="@+id/calculateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/doAction"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView
             style="@style/TextView"
@@ -42,31 +36,42 @@
             android:maxLength="2"
             android:maxLines="1"/>
 
+        <Button
+            android:id="@+id/doAction"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="计算"/>
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/resultText"
-        style="@style/TextView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/calculateLayout"
-        android:background="#66006600"
-        android:padding="10dp"/>
+        android:layout_height="match_parent"/>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/resultText"
-        android:layout_alignParentTop="true">
+    <!--<TextView-->
+    <!--android:id="@+id/resultText"-->
+    <!--style="@style/TextView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_above="@id/calculateLayout"-->
+    <!--android:background="#66006600"-->
+    <!--android:padding="10dp"/>-->
 
-        <LinearLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@id/resultText"-->
+    <!--android:layout_alignParentTop="true">-->
 
-        </LinearLayout>
-    </ScrollView>
+    <!--<LinearLayout-->
+    <!--android:id="@+id/tabLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:padding="10dp">-->
+
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
 
 </RelativeLayout>
