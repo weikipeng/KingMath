@@ -192,8 +192,9 @@ public class SunPower implements Parcelable {
 
             factorInfoList.add(new FactorInfo("每块多晶硅板面积:", String.valueOf(polysiliconPlateArea), "平方米"));
             factorInfoList.add(new FactorInfo("额定功率:", String.valueOf(ratedPower), "瓦"));
-            factorInfoList.add(new FactorInfo("单价 成本价:", String.valueOf(unitPriceCost), "元/瓦"));
-            factorInfoList.add(new FactorInfo("单价 市场价:", String.valueOf(unitPriceMarket), "元/瓦"));
+            factorInfoList.add(new FactorInfo("单价", String.valueOf(unitPriceCost), "元/瓦"));
+//            factorInfoList.add(new FactorInfo("单价 成本价:", String.valueOf(unitPriceCost), "元/瓦"));
+//            factorInfoList.add(new FactorInfo("单价 市场价:", String.valueOf(unitPriceMarket), "元/瓦"));
 
             factorInfoList.add(new FactorInfo("年发电量系数因子:", String.valueOf(factorAnnualPowerGeneration), ""));
 
@@ -215,13 +216,14 @@ public class SunPower implements Parcelable {
     public List<ResultShowInfo> getResultInfoList() {
         if (resultInfoList == null) {
             resultInfoList = new ArrayList<>();
-        }else{
+        } else {
             resultInfoList.clear();
         }
-
-        resultInfoList.add(new ResultShowInfo("装机容量:", String.valueOf(getInstalledCapacity()), "瓦"));
-        resultInfoList.add(new ResultShowInfo("年发电量:", String.valueOf(getAnnualPowerGeneration()), "度"));
+        resultInfoList.add(new ResultShowInfo("数量:", String.valueOf(number), "块"));
+        resultInfoList.add(new ResultShowInfo("装机容量:", String.valueOf(getInstalledCapacity() / 1000f), "千瓦"));
         resultInfoList.add(new ResultShowInfo("投资造价:", String.valueOf(getInvestmentCost()), "元"));
+        resultInfoList.add(new ResultShowInfo("年发电量:", String.valueOf(getAnnualPowerGeneration()), "度"));
+
         resultInfoList.add(new ResultShowInfo("全额上网收益:", String.valueOf(getProfitsAllPush()), "元"));
         resultInfoList.add(new ResultShowInfo("自发自用余电上网（" +
                 (selfUsePercent * 100) + "%自用）:", String.valueOf(getProfitsUseSelf()), "元"));
