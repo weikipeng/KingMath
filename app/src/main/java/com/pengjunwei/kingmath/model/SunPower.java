@@ -255,10 +255,21 @@ public class SunPower implements Parcelable {
 
         resultInfoList.add(data);
 
-        double pmtMonth = pmt();
 
-        resultInfoList.add(new ResultShowInfo("", "月供:", pmtMonth, "元/月"));
-        resultInfoList.add(new ResultShowInfo("", "年贷款金额:", pmtMonth * 12, "元/年"));
+        //----------------------------------------------------------------
+        //--------------------------------银行贷款--------------------------------
+        //----------------------------------------------------------------
+        double               pmtMonth = pmt();
+        ViewHolderItem3.Data pmtData  = new ViewHolderItem3.Data();
+        pmtData.resultShowInfoList = new ArrayList<>();
+        pmtData.name = "银行贷款" + bankLoanCycle + "年";
+        pmtData.resultShowInfoList.add(new ResultShowInfo("", "", pmtMonth, "元/月"));
+        pmtData.resultShowInfoList.add(new ResultShowInfo("", "", pmtMonth * 12, "元/年"));
+        resultInfoList.add(pmtData);
+
+
+//        resultInfoList.add(new ResultShowInfo("", "月供:", pmtMonth, "元/月"));
+//        resultInfoList.add(new ResultShowInfo("", "年贷款金额:", pmtMonth * 12, "元/年"));
 
         //     * 月供利用房贷计算器：224.6元/月
 // * 年贷款金额：224.6*12=2695.2元
