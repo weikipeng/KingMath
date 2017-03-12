@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.viewholder;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,42 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
     public ViewHolderFactor(View itemView) {
         super(itemView);
         initView();
+        addEvent();
+    }
+
+    protected void addEvent() {
+        mValueText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mValueText.setVisibility(View.GONE);
+                mValueEditText.setVisibility(View.VISIBLE);
+                mValueEditText.requestFocus();
+            }
+        });
+
+        mValueEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    mValueText.setVisibility(View.VISIBLE);
+                    mValueEditText.setVisibility(View.GONE);
+
+                    if (mData == null) {
+                        return;
+                    }
+                    if (!(mData instanceof FactorInfo)) {
+                        return;
+                    }
+
+                    FactorInfo tData    = (FactorInfo) mData;
+                    String     newValue = mValueEditText.getText().toString();
+                    if (!TextUtils.isEmpty(newValue)) {
+                        tData.value = newValue;
+                        updateView(tData);
+                    }
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -36,6 +73,7 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
 
     @Override
     public void onBindViewHolder(int position, Object data) {
+        super.onBindViewHolder(position, data);
         if (data == null) {
             return;
         }
@@ -44,6 +82,10 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
         }
 
         FactorInfo tData = (FactorInfo) data;
+        updateView(tData);
+    }
+
+    public void updateView(FactorInfo tData) {
         mTitle.setText(tData.name);
         mValueText.setText(tData.value);
         mValueEditText.setText(tData.value);

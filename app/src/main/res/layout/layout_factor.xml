@@ -71,6 +71,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/bootstrap_brand_warning"
                 android:visibility="gone"
                 app:bootstrapBrand="info"
