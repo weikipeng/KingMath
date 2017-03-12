@@ -33,33 +33,11 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
 
 
     protected void initData() {
-
         mAdapter = new SunPowerAdapter(this);
         mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class
                 , new ViewHolderFactor.LayoutProvider());
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
         mSunPower = new SunPower();
-
-//        //--
-//
-//        TextView textView = new TextView(this);
-//        textView.setLayoutParams(new LinearLayout
-//                .LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-//        textView.setTextColor(getResources().getColor(R.color.colorText));
-//
-//        StringBuilder stringBuilder = new StringBuilder();
-//
-//        List<FactorInfo> factorInfoList = mSunPower.getFactorInfoList();
-//
-//        if (factorInfoList != null && factorInfoList.size() > 0) {
-//            for (FactorInfo info : factorInfoList) {
-//                stringBuilder.append(info.name)
-//                        .append(info.value).append(info.unitText).append("\n");
-//            }
-//        }
-//
-//        textView.setText(stringBuilder.toString());
-//        mTabLayout.addView(textView);
     }
 
 

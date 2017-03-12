@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.mvp.recyclerview;
 
+import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -13,13 +14,23 @@ import com.pengjunwei.kingmath.mvp.IPresenter;
  */
 public class BaseRecyclerMVPView extends BaseMVPView implements IRecyclerView {
     protected RecyclerView mRecyclerView;
+    protected int          mRecyclerViewId;
 
     public BaseRecyclerMVPView(IMVPProvider provider) {
-        this(provider, null);
+        this(provider, R.id.recyclerView);
+    }
+
+    public BaseRecyclerMVPView(IMVPProvider provider, @IdRes int recyclerViewId) {
+        this(provider, recyclerViewId, null);
     }
 
     public <T extends IPresenter> BaseRecyclerMVPView(IMVPProvider provider, T presenter) {
+        this(provider, R.id.recyclerView, presenter);
+    }
+
+    public <T extends IPresenter> BaseRecyclerMVPView(IMVPProvider provider, int recyclerViewId, T presenter) {
         super(provider, presenter);
+        this.mRecyclerViewId = recyclerViewId;
         initView();
         initData();
         addEvent();
@@ -27,7 +38,7 @@ public class BaseRecyclerMVPView extends BaseMVPView implements IRecyclerView {
 
 
     protected void initView() {
-        mRecyclerView = provider.findViewById(R.id.recyclerView);
+        mRecyclerView = provider.findViewById(mRecyclerViewId);
     }
 
     protected void initData() {

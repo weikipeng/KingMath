@@ -3,6 +3,8 @@ package com.pengjunwei.kingmath.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
+
 import org.apache.poi.ss.formula.functions.FinanceLib;
 
 import java.math.BigDecimal;
@@ -158,8 +160,8 @@ public class SunPower implements Parcelable {
                 , false//at the beginning of the period (or at the end)
         );
 
-        BigDecimal   b   =   new BigDecimal(result);
-        return b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        BigDecimal b = new BigDecimal(result);
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     //----------------------------------------------------------------
@@ -198,9 +200,9 @@ public class SunPower implements Parcelable {
         return result;
     }
 
-    transient protected List<FactorInfo> factorInfoList;
+    transient protected List<Object> factorInfoList;
 
-    public List<FactorInfo> getFactorInfoList() {
+    public List<Object> getFactorInfoList() {
 
         if (factorInfoList == null) {
             factorInfoList = new ArrayList<>();
@@ -225,9 +227,9 @@ public class SunPower implements Parcelable {
         return factorInfoList;
     }
 
-    transient protected List<ResultShowInfo> resultInfoList;
+    transient protected List<Object> resultInfoList;
 
-    public List<ResultShowInfo> getResultInfoList() {
+    public List<Object> getResultInfoList() {
         if (resultInfoList == null) {
             resultInfoList = new ArrayList<>();
         } else {
@@ -238,7 +240,20 @@ public class SunPower implements Parcelable {
         resultInfoList.add(new ResultShowInfo("", "投资造价:", getInvestmentCost(), "元"));
         resultInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
 
-        resultInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
+//        resultInfoList.add(new ResultShowInfo("", "全额上网收益:", getProfitsAllPush(), "元"));
+
+
+        //----------------------------------------------------------------
+        //--------------------------------注释--------------------------------
+        //----------------------------------------------------------------
+        ViewHolderItem3.Data data = new ViewHolderItem3.Data();
+        data.resultShowInfoList = new ArrayList<>();
+        data.name = "全额上网收益";
+        data.resultShowInfoList.add(new ResultShowInfo("", "国家补贴:", countryAllowance, "元/度"));
+        data.resultShowInfoList.add(new ResultShowInfo("", "省补贴:", provinceAllowance, "元/度"));
+        data.resultShowInfoList.add(new ResultShowInfo("", "脱硫电价:", countryElectricityGridPrice, "元/度"));
+
+        resultInfoList.add(data);
 
         double pmtMonth = pmt();
 
@@ -248,7 +263,7 @@ public class SunPower implements Parcelable {
         //     * 月供利用房贷计算器：224.6元/月
 // * 年贷款金额：224.6*12=2695.2元
 
-        resultInfoList.add(new ResultShowInfo("", "全额上网收益:", getProfitsAllPush(), "元"));
+
         resultInfoList.add(new ResultShowInfo("", "自发自用余电上网（" +
                 (selfUsePercent * 100) + "%自用）:", getProfitsUseSelf(), "元"));
 

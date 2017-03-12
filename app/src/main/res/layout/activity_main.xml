@@ -59,10 +59,21 @@
 
     </LinearLayout>
 
+
+    <!--<com.beardedhen.androidbootstrap.BootstrapWell-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_margin="8dp"-->
+    <!--app:bootstrapSize="xl">-->
+
+    <!--</com.beardedhen.androidbootstrap.BootstrapWell>-->
+
     <android.support.v7.widget.RecyclerView
         android:id="@id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/calculateLayout"/>
+
 
 </RelativeLayout>

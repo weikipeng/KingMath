@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.mvp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.View;
@@ -16,6 +17,14 @@ public class MVPProvider implements IMVPProvider {
     public MVPProvider(Activity activity) {
         view = activity.getWindow().getDecorView().findViewById(android.R.id.content);
         mActivity = activity;
+    }
+
+    public MVPProvider(View view) {
+        this.view = view;
+        Context context = view.getContext();
+        if (context instanceof Activity) {
+            mActivity = (Activity) context;
+        }
     }
 
 
