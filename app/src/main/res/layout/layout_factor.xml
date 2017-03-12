@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="35dp"
@@ -56,21 +57,36 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/unit">
 
-            <EditText
+            <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center_vertical|right"-->
+            <!--android:visibility="gone"-->
+            <!--tools:text="30"/>-->
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/value"
                 style="@style/TextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/bootstrap_brand_warning"
                 android:visibility="gone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                app:showOutline="false"
                 tools:text="30"/>
 
-            <TextView
+
+            <com.beardedhen.androidbootstrap.AwesomeTextView
                 android:id="@+id/valueText"
                 style="@style/TextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
+                app:bootstrapBrand="warning"
                 tools:text="30"/>
         </FrameLayout>
     </RelativeLayout>
