@@ -88,6 +88,11 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
         changeFieldValue(mSunPower, SunPower.class, data.fieldName, data.value);
     }
 
+    @Override
+    public boolean isEditable() {
+        return true;
+    }
+
     protected void changeFieldValue(Object object, Class clazz, String name, Object value) {
         Field declaredField = null;
         try {

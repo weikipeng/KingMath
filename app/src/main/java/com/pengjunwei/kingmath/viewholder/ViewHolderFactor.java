@@ -30,10 +30,18 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
     public ViewHolderFactor(View itemView, IViewParam viewParam) {
         super(itemView, viewParam);
         initView();
+
         addEvent();
     }
 
     protected void addEvent() {
+
+        if (!(mViewParam instanceof IViewParamSunPower)) {
+            return;
+        }
+        if (!((IViewParamSunPower) mViewParam).isEditable()) {
+            return;
+        }
         mValueText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

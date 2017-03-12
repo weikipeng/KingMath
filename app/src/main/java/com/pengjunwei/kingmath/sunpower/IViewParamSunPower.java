@@ -9,4 +9,7 @@ import com.pengjunwei.kingmath.mvp.IViewParam;
  */
 public interface IViewParamSunPower extends IViewParam {
     void updateFactor(FactorInfo data);
+
+    /**是否可编辑*/
+    boolean isEditable();
 }

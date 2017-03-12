@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.pengjunwei.kingmath.MainActivity;
+import com.pengjunwei.kingmath.model.FactorInfo;
 import com.pengjunwei.kingmath.model.ResultShowInfo;
 import com.pengjunwei.kingmath.model.SunPower;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
+import com.pengjunwei.kingmath.sunpower.IViewParamSunPower;
 import com.pengjunwei.kingmath.sunpower.SunPowerAdapter;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
@@ -15,7 +17,7 @@ import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
 /**
  * Created by WikiPeng on 2017/3/11 18:34.
  */
-public class SunPowerProfitsPresenter extends BaseRecyclerPresenter {
+public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements IViewParamSunPower {
     protected SunPower mSunPower;
 
     public SunPowerProfitsPresenter(Activity activity) {
@@ -25,7 +27,7 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter {
     }
 
     protected void initData() {
-        mAdapter = new SunPowerAdapter();
+        mAdapter = new SunPowerAdapter(this);
         mAdapter.getTypeProvider().register(ResultShowInfo.class, ViewHolderResult.class
                 , new ViewHolderFactor.LayoutProvider());
 
@@ -47,5 +49,15 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter {
         if (intent != null) {
             mSunPower = intent.getParcelableExtra(MainActivity.EXTRA_DATA);
         }
+    }
+
+    @Override
+    public void updateFactor(FactorInfo data) {
+
+    }
+
+    @Override
+    public boolean isEditable() {
+        return false;
     }
 }
