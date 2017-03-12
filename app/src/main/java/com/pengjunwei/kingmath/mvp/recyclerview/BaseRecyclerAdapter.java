@@ -1,8 +1,9 @@
 package com.pengjunwei.kingmath.mvp.recyclerview;
 
-import android.net.sip.SipManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import com.pengjunwei.kingmath.mvp.IViewParam;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,9 +15,16 @@ import java.util.List;
 public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
     protected IViewTypeProvider mTypeProvider;
     protected List<Object>      mDataList;
+    protected IViewParam        mViewParam;
+
 
     public BaseRecyclerAdapter() {
+        this(null);
+    }
+
+    public BaseRecyclerAdapter(IViewParam viewParam) {
         mDataList = new ArrayList<>();
+        this.mViewParam = viewParam;
     }
 
     public void setTypeProvider(IViewTypeProvider provider) {
@@ -25,7 +33,7 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerViewHo
 
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return mTypeProvider.getViewHolder(parent, viewType);
+        return mTypeProvider.getViewHolder(parent, viewType, mViewParam);
     }
 
     @Override

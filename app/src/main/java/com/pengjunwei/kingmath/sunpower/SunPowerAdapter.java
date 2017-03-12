@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.sunpower;
 
+import com.pengjunwei.kingmath.mvp.IViewParam;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerAdapter;
 
 /**
@@ -8,6 +9,10 @@ import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerAdapter;
 public class SunPowerAdapter extends BaseRecyclerAdapter {
 
     public SunPowerAdapter() {
+        super();
     }
 
+    public SunPowerAdapter(IViewParam viewParam) {
+        super(viewParam);
+    }
 }

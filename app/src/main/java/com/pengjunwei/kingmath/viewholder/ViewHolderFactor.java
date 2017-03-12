@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.model.FactorInfo;
+import com.pengjunwei.kingmath.mvp.IViewParam;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerViewHolder;
 import com.pengjunwei.kingmath.mvp.recyclerview.ILayoutProvider;
+import com.pengjunwei.kingmath.sunpower.IViewParamSunPower;
 
 /**
  * Created by WikiPeng on 2017/3/11 16:03.
@@ -23,8 +25,8 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
     protected TextView mUnit;
 
 
-    public ViewHolderFactor(View itemView) {
-        super(itemView);
+    public ViewHolderFactor(View itemView, IViewParam viewParam) {
+        super(itemView, viewParam);
         initView();
         addEvent();
     }
@@ -58,6 +60,10 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
                     if (!TextUtils.isEmpty(newValue)) {
                         tData.value = newValue;
                         updateView(tData);
+
+                        if (mViewParam instanceof IViewParamSunPower) {
+                            ((IViewParamSunPower) mViewParam).updateFactor(tData);
+                        }
                     }
                 }
             }
@@ -87,17 +93,18 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
 
     public void updateView(FactorInfo tData) {
         mTitle.setText(tData.name);
-        mValueText.setText(tData.value);
-        mValueEditText.setText(tData.value);
+        mValueText.setText(String.valueOf(tData.value));
+        mValueEditText.setText(String.valueOf(tData.value));
         mUnit.setText(tData.unitText);
     }
 
     public static class LayoutProvider implements ILayoutProvider {
 
         @Override
-        public BaseRecyclerViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        public BaseRecyclerViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater
+                , @NonNull ViewGroup parent, IViewParam viewParam) {
             return new ViewHolderFactor(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_factor, parent, false));
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_factor, parent, false), viewParam);
         }
     }
 }

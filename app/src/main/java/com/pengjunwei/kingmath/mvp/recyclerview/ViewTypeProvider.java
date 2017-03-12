@@ -3,6 +3,8 @@ package com.pengjunwei.kingmath.mvp.recyclerview;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.pengjunwei.kingmath.mvp.IViewParam;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +41,12 @@ public class ViewTypeProvider implements IViewTypeProvider {
     }
 
     @Override
-    public BaseRecyclerViewHolder getViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder getViewHolder(ViewGroup parent, int viewType, IViewParam viewParam) {
         if (viewType >= 0 && viewType < classList.size()) {
             Class           clazz          = classList.get(viewType);
             ILayoutProvider layoutProvider = layoutHashMap.get(clazz);
             if (layoutProvider != null) {
-                return layoutProvider.onCreateViewHolder(LayoutInflater.from(parent.getContext()), parent);
+                return layoutProvider.onCreateViewHolder(LayoutInflater.from(parent.getContext()), parent,viewParam);
             }
         }
 

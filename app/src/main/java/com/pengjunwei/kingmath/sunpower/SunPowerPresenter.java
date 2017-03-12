@@ -11,6 +11,8 @@ import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by WikiPeng on 2017/3/11 15:44.
  */
@@ -31,7 +33,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
 
     protected void initData() {
 
-        mAdapter = new SunPowerAdapter();
+        mAdapter = new SunPowerAdapter(this);
         mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class
                 , new ViewHolderFactor.LayoutProvider());
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
@@ -74,5 +76,31 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
         Intent intent = new Intent(provider.getActivity(), SunPowerProfitsActivity.class);
         intent.putExtra(MainActivity.EXTRA_DATA, mSunPower);
         provider.getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void updateFactor(FactorInfo data) {
+        if (data == null) {
+            return;
+        }
+
+        changeFieldValue(mSunPower, SunPower.class, data.name, data.value);
+    }
+
+    protected void changeFieldValue(Object object, Class clazz, String name, Object value) {
+        Field declaredField = null;
+        try {
+            declaredField = clazz.getDeclaredField(name);
+            boolean accessible = declaredField.isAccessible();
+            declaredField.setAccessible(true);
+
+            declaredField.set(object, value);
+            declaredField.setAccessible(accessible);
+        } catch (NoSuchFieldException
+                | SecurityException
+                | IllegalArgumentException
+                | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

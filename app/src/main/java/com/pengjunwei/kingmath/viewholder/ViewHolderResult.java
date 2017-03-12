@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pengjunwei.kingmath.R;
+import com.pengjunwei.kingmath.mvp.IViewParam;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerViewHolder;
 import com.pengjunwei.kingmath.mvp.recyclerview.ILayoutProvider;
 
@@ -14,8 +15,8 @@ import com.pengjunwei.kingmath.mvp.recyclerview.ILayoutProvider;
  */
 public class ViewHolderResult extends ViewHolderFactor {
 
-    public ViewHolderResult(View itemView) {
-        super(itemView);
-    }
 
+    public ViewHolderResult(View itemView, IViewParam viewParam) {
+        super(itemView, viewParam);
+    }
 }
