@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,51 +13,40 @@
     <TextView
         android:id="@+id/name"
         style="@style/TextView"
+        android:layout_alignParentTop="true"
         android:text="自用比例"
         tools:text="自用比例:"/>
 
-    <RelativeLayout
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/seekBarPercent"
+        style="@style/TextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/name"
+        app:bootstrapBrand="warning"
+        tools:text="30%"/>
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/seekBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        app:bsb_auto_adjust_section_mark="true"
+        app:bsb_max="100"
+        app:bsb_min="1"
+        app:bsb_progress="10"
+        app:bsb_second_track_color="#FF0000"
+        app:bsb_show_section_mark="false"
+        app:bsb_show_text="true"
+        app:bsb_track_color="#00FF00"
+        app:bsb_track_size="4dp"/>
 
-        <TextView
-            android:id="@+id/seekStart"
-            style="@style/TextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="1"
-            tools:text="1"/>
+    <!--app:bsb_show_section_mark="true"-->
 
-        <TextView
-            android:id="@+id/seekEnd"
-            style="@style/TextView"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="30"
-            tools:text="30"/>
-
-        <com.xw.repo.BubbleSeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="32dp"
-            android:layout_toEndOf="@id/seekStart"
-            android:layout_toLeftOf="@id/seekEnd"
-            android:layout_toRightOf="@id/seekStart"
-            android:layout_toStartOf="@id/seekEnd"
-            app:bsb_max="30"
-            app:bsb_min="1"
-            app:bsb_progress="10"
-            app:bsb_second_track_color="#FF0000"
-            app:bsb_track_color="#00FF00"
-            app:bsb_track_size="4dp"/>
-
-    </RelativeLayout>
 
     <!--app:bsb_second_track_color="@color/color_green"
         app:bsb_track_color="@color/color_gray"-->
 
-</LinearLayout>
+</RelativeLayout>

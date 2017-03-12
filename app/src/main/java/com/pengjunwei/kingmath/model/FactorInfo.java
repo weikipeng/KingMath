@@ -3,7 +3,7 @@ package com.pengjunwei.kingmath.model;
 /**
  * Created by WikiPeng on 2017/3/11 11:01.
  */
-public class FactorInfo {
+public class FactorInfo implements Cloneable{
     public String fieldName;
     /**
      * 参数的名字
@@ -23,5 +23,10 @@ public class FactorInfo {
         this.name = name;
         this.value = value;
         this.unitText = unitText;
+    }
+
+    @Override
+    public FactorInfo clone() throws CloneNotSupportedException {
+        return (FactorInfo) super.clone();
     }
 }

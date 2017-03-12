@@ -12,11 +12,13 @@ import com.xw.repo.BubbleSeekBar;
 /**
  * Created by WikiPeng on 2017/3/11 18:34.
  */
-public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowerProfitsView{
+public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowerProfitsView {
 
     protected TextView mSelfProfit;
 
     protected BubbleSeekBar mSeekBar;
+
+    protected TextView mSeekBarPercent;
 
     public SunPowerProfitsView(IMVPProvider provider) {
         super(provider);
@@ -30,7 +32,9 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
     protected void initView() {
         super.initView();
         mSelfProfit = provider.findViewById(R.id.selfUseProfits);
+        mSeekBarPercent = provider.findViewById(R.id.seekBarPercent);
         mSeekBar = provider.findViewById(R.id.seekBar);
+        mSeekBar.setShowText(true);
     }
 
     @Override
@@ -41,7 +45,20 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
     }
 
     @Override
+    protected void addEvent() {
+        super.addEvent();
+        mSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+            @Override
+            public void onProgressChanged(int progress) {
+                mSeekBarPercent.setText(progress + "%");
+            }
+        });
+    }
+
+    @Override
     public void updateView(SunPower data) {
         mSelfProfit.setText(String.valueOf(data.getProfitsUseSelf()));
+        mSeekBarPercent.setText(data.selfUsePercent * 100 + "%");
+        mSeekBar.setProgress(data.selfUsePercent * 100);
     }
 }

@@ -63,6 +63,17 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
             return;
         }
 
+        switch (data.fieldName) {
+            case "selfUsePercent":
+                try {
+                    data = data.clone();
+                    data.value = Float.parseFloat(String.valueOf(data.value)) / 100f;
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
         changeFieldValue(mSunPower, SunPower.class, data.fieldName, data.value);
     }
 

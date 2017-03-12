@@ -83,7 +83,7 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
 
                 FactorInfo tData    = (FactorInfo) mData;
                 String     newValue = mValueEditText.getText().toString();
-                if (!TextUtils.isEmpty(newValue)) {
+                if (!TextUtils.isEmpty(newValue) && !newValue.equals(String.valueOf(tData.value))) {
                     tData.value = newValue;
                     mValueText.setText(newValue);
 

@@ -278,8 +278,8 @@ public class SunPower implements Parcelable {
 // * 年贷款金额：224.6*12=2695.2元
 
 
-        resultInfoList.add(new ResultShowInfo("", "自发自用余电上网（" +
-                (selfUsePercent * 100) + "%自用）:", getProfitsUseSelf(), "元"));
+//        resultInfoList.add(new ResultShowInfo("", "自发自用余电上网（" +
+//                (selfUsePercent * 100) + "%自用）:", getProfitsUseSelf(), "元"));
 
         return resultInfoList;
     }
