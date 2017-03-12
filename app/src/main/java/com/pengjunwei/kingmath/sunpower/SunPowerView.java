@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.mvp.IMVPProvider;
 import com.pengjunwei.kingmath.mvp.IPresenter;
@@ -14,8 +15,8 @@ import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerMVPView;
  * Created by WikiPeng on 2017/3/11 15:42.
  */
 public class SunPowerView extends BaseRecyclerMVPView implements View.OnClickListener {
-    protected EditText mNumber;
-    protected Button   mButton;
+    protected EditText        mNumber;
+    protected BootstrapButton mButton;
 
     public SunPowerView(IMVPProvider provider) {
         super(provider);

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="35dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     tools:background="@color/colorBackground">
@@ -18,8 +18,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/colorBackgroundBoard"/>
+        android:layout_marginTop="2dp"/>
 
 
     <TextView
@@ -75,17 +74,5 @@
                 tools:text="30"/>
         </FrameLayout>
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorBackgroundBoard"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorBackgroundBoard"/>
 
 </RelativeLayout>

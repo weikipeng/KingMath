@@ -27,4 +27,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     testCompile 'junit:junit:4.12'
+
+    compile 'com.beardedhen:androidbootstrap:2.3.1'
 }
