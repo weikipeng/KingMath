@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.viewholder;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,11 @@ public class ViewHolderItem3 extends BaseRecyclerViewHolder {
     protected TextView   mTitle;
     protected IPresenter mRecyclerPresenter;
 
+    protected View     mBottomLine;
+    protected View     mBottomLayout;
+    protected TextView mValueText;
+    protected TextView mUnit;
+
 
     public ViewHolderItem3(View itemView, IViewParam viewParam) {
         super(itemView, viewParam);
@@ -48,6 +54,11 @@ public class ViewHolderItem3 extends BaseRecyclerViewHolder {
 
     private void initView() {
         mTitle = (TextView) itemView.findViewById(R.id.name);
+
+        mBottomLine = itemView.findViewById(R.id.bottomCutLine);
+        mBottomLayout = itemView.findViewById(R.id.bottomLayout);
+        mValueText = (TextView) itemView.findViewById(R.id.valueText);
+        mUnit = (TextView) itemView.findViewById(R.id.unit);
         mRecyclerPresenter = new BaseRecyclerPresenter(itemView);
         mRecyclerPresenter.setMVPView(
                 new BaseRecyclerMVPView(mRecyclerPresenter.getProvider()
@@ -76,6 +87,17 @@ public class ViewHolderItem3 extends BaseRecyclerViewHolder {
     public void updateView(Data tData) {
         mTitle.setText(tData.name);
         ((IRecyclerPresenter) mRecyclerPresenter).setRecyclerViewData(tData.resultShowInfoList);
+
+        if (tData.value == null || TextUtils.isEmpty(String.valueOf(tData.value))) {
+            mBottomLine.setVisibility(View.GONE);
+            mBottomLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        mBottomLine.setVisibility(View.VISIBLE);
+        mBottomLayout.setVisibility(View.VISIBLE);
+        mUnit.setText(tData.unit);
+        mValueText.setText(String.valueOf(tData.value));
     }
 
     public static class LayoutProvider implements ILayoutProvider {
@@ -91,5 +113,8 @@ public class ViewHolderItem3 extends BaseRecyclerViewHolder {
     public static class Data {
         public String               name;
         public List<ResultShowInfo> resultShowInfoList;
+        public Object               value;
+        public String               unit;
+
     }
 }

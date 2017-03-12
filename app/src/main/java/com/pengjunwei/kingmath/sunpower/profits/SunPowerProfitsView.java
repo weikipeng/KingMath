@@ -20,6 +20,8 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
 
     protected TextView mSeekBarPercent;
 
+    protected int mOldProgress;
+
     public SunPowerProfitsView(IMVPProvider provider) {
         super(provider);
     }
@@ -50,7 +52,12 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
         mSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
             public void onProgressChanged(int progress) {
+                if (mOldProgress == progress) {
+                    return;
+                }
+                mOldProgress = progress;
                 mSeekBarPercent.setText(progress + "%");
+                ((ISunPowerProfitsPresenter) presenter).updateSelfUsePercent(progress);
             }
         });
     }

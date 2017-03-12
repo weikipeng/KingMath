@@ -252,6 +252,8 @@ public class SunPower implements Parcelable {
         ViewHolderItem3.Data data = new ViewHolderItem3.Data();
         data.resultShowInfoList = new ArrayList<>();
         data.name = "全额上网收益";
+        data.value = getProfitsAllPush();
+        data.unit = "元";
         data.resultShowInfoList.add(new ResultShowInfo("", "国家补贴:", countryAllowance, "元/度"));
         data.resultShowInfoList.add(new ResultShowInfo("", "省补贴:", provinceAllowance, "元/度"));
         data.resultShowInfoList.add(new ResultShowInfo("", "脱硫电价:", countryElectricityGridPrice, "元/度"));

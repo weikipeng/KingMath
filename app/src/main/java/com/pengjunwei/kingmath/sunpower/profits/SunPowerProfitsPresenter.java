@@ -9,7 +9,6 @@ import com.pengjunwei.kingmath.model.ResultShowInfo;
 import com.pengjunwei.kingmath.model.SunPower;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
-import com.pengjunwei.kingmath.sunpower.IViewParamSunPower;
 import com.pengjunwei.kingmath.sunpower.SunPowerAdapter;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
@@ -18,7 +17,7 @@ import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
 /**
  * Created by WikiPeng on 2017/3/11 18:34.
  */
-public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements IViewParamSunPower {
+public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements ISunPowerProfitsPresenter {
     protected SunPower mSunPower;
 
     public SunPowerProfitsPresenter(Activity activity) {
@@ -43,11 +42,12 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
     public void refresh(boolean isForce) {
         super.refresh(isForce);
         if (mSunPower != null) {
+            mAdapter.clear();
             mAdapter.add(mSunPower.getResultInfoList());
             mAdapter.notifyDataSetChanged();
         }
 
-        ((ISunPowerProfitsView)mvpView).updateView(mSunPower);
+        ((ISunPowerProfitsView) mvpView).updateView(mSunPower);
     }
 
     @Override
@@ -65,5 +65,11 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
     @Override
     public boolean isEditable() {
         return false;
+    }
+
+    @Override
+    public void updateSelfUsePercent(float progress) {
+        mSunPower.selfUsePercent = progress / 100f;
+        refresh(true);
     }
 }
