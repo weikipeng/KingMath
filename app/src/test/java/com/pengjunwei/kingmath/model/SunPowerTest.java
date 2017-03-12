@@ -36,7 +36,7 @@ public class SunPowerTest {
     @Test
     public void getProfitsUseSelf() throws Exception {
         float result = sunPower.getProfitsUseSelf();
-        System.out.println("getProfitsAllPush ===>" + result);
+        System.out.println("00000 getProfitsUseSelf ===>" + result);
     }
 
 }

@@ -284,6 +284,9 @@ public class SunPower implements Parcelable {
         return resultInfoList;
     }
 
+    public SunPower() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -306,9 +309,6 @@ public class SunPower implements Parcelable {
         dest.writeInt(this.number);
     }
 
-    public SunPower() {
-    }
-
     protected SunPower(Parcel in) {
         this.polysiliconPlateArea = in.readFloat();
         this.ratedPower = in.readInt();
@@ -325,7 +325,7 @@ public class SunPower implements Parcelable {
         this.number = in.readInt();
     }
 
-    public static final Parcelable.Creator<SunPower> CREATOR = new Parcelable.Creator<SunPower>() {
+    public static final Creator<SunPower> CREATOR = new Creator<SunPower>() {
         @Override
         public SunPower createFromParcel(Parcel source) {
             return new SunPower(source);

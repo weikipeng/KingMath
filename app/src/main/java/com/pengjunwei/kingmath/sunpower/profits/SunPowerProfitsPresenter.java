@@ -46,6 +46,8 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
             mAdapter.add(mSunPower.getResultInfoList());
             mAdapter.notifyDataSetChanged();
         }
+
+        ((ISunPowerProfitsView)mvpView).updateView(mSunPower);
     }
 
     @Override
