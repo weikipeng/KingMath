@@ -144,6 +144,9 @@ public class SunPower implements Parcelable {
         return getInstalledCapacity() * unitPriceCost;
     }
 
+    public float getProfitPercent() {
+        return 0;
+    }
 
     //----------------------------------------------------------------
     //----------------------------------------------------------------
