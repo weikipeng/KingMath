@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.model;
 
+import org.apache.poi.ss.formula.functions.FinanceLib;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,32 +16,17 @@ public class SunPowerTest {
         sunPower.setNumber(10);
     }
 
-    //
-//    @After
-//    public void tearDown() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void setNumber() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void getInstalledCapacity() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void getAnnualPowerGeneration() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void getInvestmentCost() throws Exception {
-//
-//    }
-//
+    @Test
+    public void getPmt() {
+        double result = sunPower.pmt();
+        System.out.println("getPmt ===>" + result);
+
+        double pmt2 = FinanceLib.pmt(0.0539 / 12d, 10*12, -20800, 0, false);
+        System.out.println("getPmt ===>" + pmt2);
+
+        System.out.println("            ");
+    }
+
     @Test
     public void getProfitsAllPush() throws Exception {
         float result = sunPower.getProfitsAllPush();

@@ -3,6 +3,9 @@ package com.pengjunwei.kingmath.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.poi.ss.formula.functions.FinanceLib;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +99,7 @@ public class SunPower implements Parcelable {
     /**
      * 银行贷款周期
      */
-    public int bankLoanCycle = 8;
+    public int bankLoanCycle = 10;
 
     /**
      * 自用比例
@@ -145,6 +148,19 @@ public class SunPower implements Parcelable {
     //----------------------------------------------------------------
 //     * 月供利用房贷计算器：224.6元/月
 // * 年贷款金额：224.6*12=2695.2元
+    public double pmt() {
+//        return FinanceLib.pmt(0.00740260861, 180, -984698, 0, false);
+        double result = FinanceLib.pmt(
+                bankAnnualInterestRate / 1200d //利率
+                , bankLoanCycle * 12 //周期
+                , -((double) getInvestmentCost())
+                , 0 //future value
+                , false//at the beginning of the period (or at the end)
+        );
+
+        BigDecimal   b   =   new BigDecimal(result);
+        return b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 
     //----------------------------------------------------------------
     //--------------------------------全额上网收益--------------------------------
@@ -221,6 +237,16 @@ public class SunPower implements Parcelable {
         resultInfoList.add(new ResultShowInfo("", "装机容量:", getInstalledCapacity() / 1000f, "千瓦"));
         resultInfoList.add(new ResultShowInfo("", "投资造价:", getInvestmentCost(), "元"));
         resultInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
+
+        resultInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
+
+        double pmtMonth = pmt();
+
+        resultInfoList.add(new ResultShowInfo("", "月供:", pmtMonth, "元/月"));
+        resultInfoList.add(new ResultShowInfo("", "年贷款金额:", pmtMonth * 12, "元/年"));
+
+        //     * 月供利用房贷计算器：224.6元/月
+// * 年贷款金额：224.6*12=2695.2元
 
         resultInfoList.add(new ResultShowInfo("", "全额上网收益:", getProfitsAllPush(), "元"));
         resultInfoList.add(new ResultShowInfo("", "自发自用余电上网（" +
