@@ -72,6 +72,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:singleLine="true"
+                android:inputType="numberDecimal"
                 android:textColor="@color/bootstrap_brand_warning"
                 android:visibility="gone"
                 app:bootstrapBrand="info"

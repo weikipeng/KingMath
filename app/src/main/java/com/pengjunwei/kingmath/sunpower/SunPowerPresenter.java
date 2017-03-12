@@ -2,6 +2,7 @@ package com.pengjunwei.kingmath.sunpower;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.pengjunwei.kingmath.MainActivity;
 import com.pengjunwei.kingmath.SunPowerProfitsActivity;
@@ -84,7 +85,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
             return;
         }
 
-        changeFieldValue(mSunPower, SunPower.class, data.name, data.value);
+        changeFieldValue(mSunPower, SunPower.class, data.fieldName, data.value);
     }
 
     protected void changeFieldValue(Object object, Class clazz, String name, Object value) {
@@ -94,7 +95,23 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
             boolean accessible = declaredField.isAccessible();
             declaredField.setAccessible(true);
 
+            Class classType = declaredField.getType();
+
+            String valueText = String.valueOf(value);
+
+            if (!TextUtils.isEmpty(valueText)) {
+                if (classType == int.class) {
+                    value = Integer.parseInt(valueText);
+                } else if (classType == float.class) {
+                    value = Float.parseFloat(valueText);
+                }
+            }
+
+//            if (!declaredField.getType().isInstance(value))
+//                throw new IllegalArgumentException();
+
             declaredField.set(object, value);
+
             declaredField.setAccessible(accessible);
         } catch (NoSuchFieldException
                 | SecurityException

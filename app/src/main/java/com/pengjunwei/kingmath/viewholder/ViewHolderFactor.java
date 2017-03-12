@@ -1,7 +1,9 @@
 package com.pengjunwei.kingmath.viewholder;
 
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,23 +49,38 @@ public class ViewHolderFactor extends BaseRecyclerViewHolder {
                 if (!hasFocus) {
                     mValueText.setVisibility(View.VISIBLE);
                     mValueEditText.setVisibility(View.GONE);
+                }
+            }
+        });
 
-                    if (mData == null) {
-                        return;
-                    }
-                    if (!(mData instanceof FactorInfo)) {
-                        return;
-                    }
+        mValueEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    FactorInfo tData    = (FactorInfo) mData;
-                    String     newValue = mValueEditText.getText().toString();
-                    if (!TextUtils.isEmpty(newValue)) {
-                        tData.value = newValue;
-                        updateView(tData);
+            }
 
-                        if (mViewParam instanceof IViewParamSunPower) {
-                            ((IViewParamSunPower) mViewParam).updateFactor(tData);
-                        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mData == null) {
+                    return;
+                }
+                if (!(mData instanceof FactorInfo)) {
+                    return;
+                }
+
+                FactorInfo tData    = (FactorInfo) mData;
+                String     newValue = mValueEditText.getText().toString();
+                if (!TextUtils.isEmpty(newValue)) {
+                    tData.value = newValue;
+                    mValueText.setText(newValue);
+
+                    if (mViewParam instanceof IViewParamSunPower) {
+                        ((IViewParamSunPower) mViewParam).updateFactor(tData);
                     }
                 }
             }
