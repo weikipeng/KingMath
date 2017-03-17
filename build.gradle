@@ -43,6 +43,9 @@ ext {
     rulesVersion = '0.4.1'
     espressoVersion = '2.2.1'
 
+    //OKHttp
+    okhttpVersion = '3.6.0'
+
     //svn 最后提交的版本号
     svnRevision = '0'
 }
