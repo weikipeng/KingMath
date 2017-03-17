@@ -28,8 +28,14 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     testCompile 'junit:junit:4.12'
 
+    //风格
     compile 'com.beardedhen:androidbootstrap:2.3.1'
+    //拖动条
     compile 'com.github.woxingxiao:BubbleSeekBar:2.0'
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.0'
+
+    //银行贷款计算
     // https://mvnrepository.com/artifact/org.apache.poi/poi
     compile group: 'org.apache.poi', name: 'poi', version: '3.9'
 }

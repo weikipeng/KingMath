@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
+import com.pengjunwei.kingmath.tool.FOpenLog;
+
 /**
  * Created by WikiPeng on 2017/3/11 15:30.
  */
@@ -37,5 +39,25 @@ public class BasePresenter implements IPresenter {
     @Override
     public <T extends IView> void setMVPView(T view) {
         mvpView = view;
+    }
+
+    @Override
+    public void onResume() {
+        FOpenLog.e(getClass().getSimpleName() + "======> onResume");
+    }
+
+    @Override
+    public void onPause() {
+        FOpenLog.e(getClass().getSimpleName() + "======> onPause");
+    }
+
+    @Override
+    public void onStop() {
+        FOpenLog.e(getClass().getSimpleName() + "======> onStop");
+    }
+
+    @Override
+    public void onDestroy() {
+        FOpenLog.e(getClass().getSimpleName() + "======> onDestroy");
     }
 }
