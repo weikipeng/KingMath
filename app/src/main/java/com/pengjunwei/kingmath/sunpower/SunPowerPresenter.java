@@ -8,8 +8,10 @@ import com.pengjunwei.kingmath.MainActivity;
 import com.pengjunwei.kingmath.SunPowerProfitsActivity;
 import com.pengjunwei.kingmath.model.FactorInfo;
 import com.pengjunwei.kingmath.model.SunPower;
+import com.pengjunwei.kingmath.mvp.activity.IActivityPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
+import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 
 import java.lang.reflect.Field;
@@ -17,8 +19,8 @@ import java.lang.reflect.Field;
 /**
  * Created by WikiPeng on 2017/3/11 15:44.
  */
-public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowerPresenter {
-
+public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowerPresenter, IActivityPresenter {
+    public static final short REQUEST_CODE_CALCULATE_SUN_POWER = 95;
     //----------------------------------------------------------------
     //--------------------------------注释--------------------------------
     //----------------------------------------------------------------
@@ -54,7 +56,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
         mSunPower.setNumber(number);
         Intent intent = new Intent(provider.getActivity(), SunPowerProfitsActivity.class);
         intent.putExtra(MainActivity.EXTRA_DATA, mSunPower);
-        provider.getActivity().startActivity(intent);
+        provider.getActivity().startActivityForResult(intent, REQUEST_CODE_CALCULATE_SUN_POWER);
     }
 
     @Override
@@ -119,5 +121,15 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
     public void onStop() {
         super.onStop();
         mSunPowerDao.save(mSunPower);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        FOpenLog.e("kingMathFocus debug onActivityResult ====>");
+        if (requestCode == REQUEST_CODE_CALCULATE_SUN_POWER &&
+                resultCode == Activity.RESULT_OK && data != null) {
+            mSunPower = data.getParcelableExtra(MainActivity.EXTRA_DATA);
+            refresh(true);
+        }
     }
 }

@@ -11,6 +11,7 @@ import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
 import com.pengjunwei.kingmath.sunpower.SunPowerAdapter;
 import com.pengjunwei.kingmath.sunpower.SunPowerDao;
+import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
@@ -86,6 +87,7 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
     @Override
     public void finish() {
         super.finish();
+        FOpenLog.e("kingMathFocus debug SunPowerProfitsPresenter finish ====>");
         Intent data = new Intent();
         data.putExtra(MainActivity.EXTRA_DATA, mSunPower);
         provider.getActivity().setResult(Activity.RESULT_OK,data);
