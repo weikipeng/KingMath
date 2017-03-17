@@ -3,6 +3,7 @@ package com.pengjunwei.kingmath;
 import android.app.Application;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by WikiPeng on 2017/3/12 11:11.
@@ -13,5 +14,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         TypefaceProvider.registerDefaultIconSets();
+        Stetho.initializeWithDefaults(this);
     }
 }

@@ -1,59 +1,53 @@
 package com.pengjunwei.kingmath;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.pengjunwei.kingmath.mvp.ILifeCycleListener;
 import com.pengjunwei.kingmath.mvp.IPresenter;
+import com.pengjunwei.kingmath.mvp.activity.IActivityLifePresenter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:41.
  */
 public class BaseMVPActivity extends AppCompatActivity {
-    protected IPresenter               mPresenter;
-    protected List<ILifeCycleListener> lifeCycleListeners;
+    protected IPresenter mPresenter;
 
     @Override
     protected void onResume() {
         super.onResume();
-        callLifeCycleListeners();
+        callPresenterLifeCycle();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        callLifeCycleListeners();
+        callPresenterLifeCycle();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        callLifeCycleListeners();
+        callPresenterLifeCycle();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        callPresenterLifeCycle();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        callLifeCycleListeners();
-        if (lifeCycleListeners != null) {
-            lifeCycleListeners.clear();
-        }
+        callPresenterLifeCycle();
     }
 
-    protected void addLifeCycleListeners(ILifeCycleListener listener) {
-        if (lifeCycleListeners == null) {
-            lifeCycleListeners = new ArrayList<>();
-        }
-
-        lifeCycleListeners.add(listener);
-    }
-
-    protected void callLifeCycleListeners() {
+    protected void callPresenterLifeCycle() {
         String fullClassName = Thread.currentThread().getStackTrace()[3].getClassName();
         String className     = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
         int    lineNumber    = Thread.currentThread().getStackTrace()[3].getLineNumber();
@@ -70,22 +64,25 @@ public class BaseMVPActivity extends AppCompatActivity {
 
         Log.println(Log.ERROR, "wikipeng", stringBuilder.toString());
 
-        if (lifeCycleListeners == null || lifeCycleListeners.size() == 0) {
-            return;
-        }
-        for (ILifeCycleListener listener : lifeCycleListeners) {
-            if (listener != null) {
-                try {
-                    Method method = ILifeCycleListener.class.getDeclaredMethod(methodName);
-                    method.invoke(listener);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+        if (mPresenter != null) {
+            try {
+                Method method = ILifeCycleListener.class.getDeclaredMethod(methodName);
+                method.invoke(mPresenter);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mPresenter instanceof IActivityLifePresenter) {
+            ((IActivityLifePresenter) mPresenter).onActivityResult(requestCode, resultCode, data);
         }
     }
 }

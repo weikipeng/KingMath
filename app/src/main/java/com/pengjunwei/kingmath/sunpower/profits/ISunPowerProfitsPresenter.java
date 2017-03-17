@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.sunpower.profits;
 
+import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.sunpower.IViewParamSunPower;
 
 /**

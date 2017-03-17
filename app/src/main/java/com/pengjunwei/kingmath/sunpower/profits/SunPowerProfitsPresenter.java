@@ -10,6 +10,7 @@ import com.pengjunwei.kingmath.model.SunPower;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
 import com.pengjunwei.kingmath.sunpower.SunPowerAdapter;
+import com.pengjunwei.kingmath.sunpower.SunPowerDao;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
@@ -18,7 +19,9 @@ import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
  * Created by WikiPeng on 2017/3/11 18:34.
  */
 public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements ISunPowerProfitsPresenter {
-    protected SunPower mSunPower;
+
+    protected SunPowerDao mSunPowerDao;
+    protected SunPower    mSunPower;
 
     public SunPowerProfitsPresenter(Activity activity) {
         super(activity);
@@ -27,6 +30,7 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
     }
 
     protected void initData() {
+        mSunPowerDao = new SunPowerDao(provider.getActivity());
         mAdapter = new SunPowerAdapter(this);
 
         mAdapter.getTypeProvider().register(ResultShowInfo.class, ViewHolderResult.class
@@ -71,5 +75,19 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
     public void updateSelfUsePercent(float progress) {
         mSunPower.selfUsePercent = progress / 100f;
         refresh(true);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSunPowerDao.save(mSunPower);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Intent data = new Intent();
+        data.putExtra(MainActivity.EXTRA_DATA, mSunPower);
+        provider.getActivity().setResult(Activity.RESULT_OK,data);
     }
 }

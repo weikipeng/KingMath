@@ -16,7 +16,6 @@ public class MainActivity extends BaseMVPActivity {
         setContentView(R.layout.activity_main);
 
         mPresenter = new SunPowerPresenter(this);
-        addLifeCycleListeners(mPresenter);
         mPresenter.refresh(true);
     }
 }

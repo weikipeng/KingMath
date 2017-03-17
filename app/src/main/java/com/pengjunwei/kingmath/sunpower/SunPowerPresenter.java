@@ -22,7 +22,8 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
     //----------------------------------------------------------------
     //--------------------------------注释--------------------------------
     //----------------------------------------------------------------
-    protected SunPower mSunPower;
+    protected SunPowerDao mSunPowerDao;
+    protected SunPower    mSunPower;
 
     public SunPowerPresenter(Activity activity) {
         super(activity);
@@ -31,15 +32,14 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
         initData();
     }
 
-
     protected void initData() {
         mAdapter = new SunPowerAdapter(this);
         mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class
                 , new ViewHolderFactor.LayoutProvider());
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
-        mSunPower = new SunPower();
+        mSunPowerDao = new SunPowerDao(provider.getActivity());
+        mSunPower = mSunPowerDao.getSunPower();
     }
-
 
     @Override
     public void refresh(boolean isForce) {
@@ -113,5 +113,11 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSunPowerDao.save(mSunPower);
     }
 }
