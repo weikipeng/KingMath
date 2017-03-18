@@ -13,6 +13,7 @@ import com.pengjunwei.kingmath.sunpower.SunPowerAdapter;
 import com.pengjunwei.kingmath.sunpower.SunPowerDao;
 import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
+import com.pengjunwei.kingmath.viewholder.ViewHolderGridItem;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult2;
@@ -42,6 +43,9 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
 
         mAdapter.getTypeProvider().register(ViewHolderResult2.Data.class, ViewHolderResult2.class
                 , new ViewHolderResult2.LayoutProvider());
+
+        mAdapter.getTypeProvider().register(ViewHolderGridItem.Data.class, ViewHolderGridItem.class
+                , new ViewHolderGridItem.LayoutProvider());
 
         mvpView = new SunPowerProfitsView(provider, this);
         ((IRecyclerView) mvpView).setAdapter(mAdapter);

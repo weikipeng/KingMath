@@ -3,6 +3,7 @@ package com.pengjunwei.kingmath.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.pengjunwei.kingmath.viewholder.ViewHolderGridItem;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult2;
 
@@ -254,7 +255,18 @@ public class SunPower implements Parcelable {
         resultInfoList.add(data1);
 
         //----------------------------------------------------------------
-        //--------------------------------注释--------------------------------
+        //--------------------------------银行贷款--------------------------------
+        //----------------------------------------------------------------
+        double               pmtMonth = pmt();
+        ViewHolderResult2.Data pmtData  = new ViewHolderResult2.Data();
+        pmtData.resultShowInfoList = new ArrayList<>();
+        pmtData.name = "银行贷款" + bankLoanCycle + "年";
+        pmtData.resultShowInfoList.add(new ViewHolderGridItem.Data("", "", pmtMonth, "元/月"));
+        pmtData.resultShowInfoList.add(new ViewHolderGridItem.Data("", "", pmtMonth * 12, "元/年"));
+        resultInfoList.add(pmtData);
+
+        //----------------------------------------------------------------
+        //--------------------------------全额上网--------------------------------
         //----------------------------------------------------------------
         ViewHolderItem3.Data data = new ViewHolderItem3.Data();
         data.resultShowInfoList = new ArrayList<>();
@@ -268,16 +280,7 @@ public class SunPower implements Parcelable {
         resultInfoList.add(data);
 
 
-        //----------------------------------------------------------------
-        //--------------------------------银行贷款--------------------------------
-        //----------------------------------------------------------------
-        double               pmtMonth = pmt();
-        ViewHolderResult2.Data pmtData  = new ViewHolderResult2.Data();
-        pmtData.resultShowInfoList = new ArrayList<>();
-        pmtData.name = "银行贷款" + bankLoanCycle + "年";
-        pmtData.resultShowInfoList.add(new ResultShowInfo("", "", pmtMonth, "元/月"));
-        pmtData.resultShowInfoList.add(new ResultShowInfo("", "", pmtMonth * 12, "元/年"));
-        resultInfoList.add(pmtData);
+
 
 
 //        resultInfoList.add(new ResultShowInfo("", "月供:", pmtMonth, "元/月"));
