@@ -32,6 +32,7 @@
         android:padding="4dp"/>
 
     <View
+        android:id="@+id/topDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="6dp"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"/>
 
     <View
-        android:id="@+id/bottomCutLine"
+        android:id="@+id/bottomDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginEnd="6dp"

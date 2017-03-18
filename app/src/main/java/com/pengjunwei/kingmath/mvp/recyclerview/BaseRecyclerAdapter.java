@@ -50,7 +50,7 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return mTypeProvider.getType(mDataList.get(position).getClass());
+        return getTypeProvider().getType(mDataList.get(position).getClass());
     }
 
     public void clear() {

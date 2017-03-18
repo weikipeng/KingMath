@@ -15,6 +15,7 @@ import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult;
+import com.pengjunwei.kingmath.viewholder.ViewHolderResult2;
 
 /**
  * Created by WikiPeng on 2017/3/11 18:34.
@@ -38,6 +39,9 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
                 , new ViewHolderFactor.LayoutProvider());
         mAdapter.getTypeProvider().register(ViewHolderItem3.Data.class, ViewHolderItem3.class
                 , new ViewHolderItem3.LayoutProvider());
+
+        mAdapter.getTypeProvider().register(ViewHolderResult2.Data.class, ViewHolderResult2.class
+                , new ViewHolderResult2.LayoutProvider());
 
         mvpView = new SunPowerProfitsView(provider, this);
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
@@ -90,6 +94,6 @@ public class SunPowerProfitsPresenter extends BaseRecyclerPresenter implements I
         FOpenLog.e("kingMathFocus debug SunPowerProfitsPresenter finish ====>");
         Intent data = new Intent();
         data.putExtra(MainActivity.EXTRA_DATA, mSunPower);
-        provider.getActivity().setResult(Activity.RESULT_OK,data);
+        provider.getActivity().setResult(Activity.RESULT_OK, data);
     }
 }

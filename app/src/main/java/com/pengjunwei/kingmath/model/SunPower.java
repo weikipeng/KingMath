@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
+import com.pengjunwei.kingmath.viewholder.ViewHolderResult2;
 
 import org.apache.poi.ss.formula.functions.FinanceLib;
 
@@ -238,13 +239,19 @@ public class SunPower implements Parcelable {
         } else {
             resultInfoList.clear();
         }
-        resultInfoList.add(new ResultShowInfo("", "数量:", number, "块"));
-        resultInfoList.add(new ResultShowInfo("", "装机容量:", getInstalledCapacity() / 1000f, "千瓦"));
-        resultInfoList.add(new ResultShowInfo("", "投资造价:", getInvestmentCost(), "元"));
-        resultInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
 
-//        resultInfoList.add(new ResultShowInfo("", "全额上网收益:", getProfitsAllPush(), "元"));
 
+        //----------------------------------------------------------------
+        //--------------------------------注释--------------------------------
+        //----------------------------------------------------------------
+        ViewHolderResult2.Data data1 = new ViewHolderResult2.Data();
+        data1.resultShowInfoList = new ArrayList<>();
+
+        data1.resultShowInfoList.add(new ResultShowInfo("", "板数:", number, "块"));
+        data1.resultShowInfoList.add(new ResultShowInfo("", "装机容量:", getInstalledCapacity() / 1000f, "千瓦"));
+        data1.resultShowInfoList.add(new ResultShowInfo("", "投资造价:", getInvestmentCost(), "元"));
+        data1.resultShowInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
+        resultInfoList.add(data1);
 
         //----------------------------------------------------------------
         //--------------------------------注释--------------------------------
@@ -265,7 +272,7 @@ public class SunPower implements Parcelable {
         //--------------------------------银行贷款--------------------------------
         //----------------------------------------------------------------
         double               pmtMonth = pmt();
-        ViewHolderItem3.Data pmtData  = new ViewHolderItem3.Data();
+        ViewHolderResult2.Data pmtData  = new ViewHolderResult2.Data();
         pmtData.resultShowInfoList = new ArrayList<>();
         pmtData.name = "银行贷款" + bankLoanCycle + "年";
         pmtData.resultShowInfoList.add(new ResultShowInfo("", "", pmtMonth, "元/月"));

@@ -2,4 +2,5 @@
     <string name="app_name">金算师</string>
     <string name="tips_info_empty">输入内容为空</string>
     <string name="tips_info_not_number">请输入数字类型</string>
+    <string name="number">数量:</string>
 </resources>
