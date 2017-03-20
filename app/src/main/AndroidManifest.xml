@@ -29,6 +29,8 @@
         <activity android:name=".SunPowerProfitsActivity">
 
         </activity>
+
+        <activity android:name=".license.LicenseActivity"/>
     </application>
 
 </manifest>

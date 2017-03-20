@@ -22,6 +22,10 @@ public class BasePresenter implements IPresenter {
         provider = new MVPProvider(view);
     }
 
+    protected void initData(){
+
+    }
+
     @Override
     public IMVPProvider getProvider() {
         return provider;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.beardedhen.androidbootstrap.BootstrapWell
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        app:bootstrapSize="xl">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/license"
+                style="@style/TextView"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/bootstrap_brand_warning"
+                android:visibility="gone"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                tools:text="30"/>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/doAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:text="计算"
+                app:bootstrapBrand="success"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"/>
+
+        </LinearLayout>
+
+    </com.beardedhen.androidbootstrap.BootstrapWell>
+
+
+</LinearLayout>

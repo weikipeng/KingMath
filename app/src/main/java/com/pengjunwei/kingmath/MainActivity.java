@@ -1,8 +1,10 @@
 package com.pengjunwei.kingmath;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.pengjunwei.kingmath.license.LicenseActivity;
 import com.pengjunwei.kingmath.sunpower.SunPowerPresenter;
 
 /**
@@ -10,6 +12,7 @@ import com.pengjunwei.kingmath.sunpower.SunPowerPresenter;
  */
 public class MainActivity extends BaseMVPActivity {
     public static final String EXTRA_DATA = "data";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,5 +20,6 @@ public class MainActivity extends BaseMVPActivity {
 
         mPresenter = new SunPowerPresenter(this);
         mPresenter.refresh(true);
+        startActivity(new Intent(this, LicenseActivity.class));
     }
 }
