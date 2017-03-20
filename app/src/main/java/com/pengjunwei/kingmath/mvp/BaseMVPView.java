@@ -16,8 +16,16 @@ public class BaseMVPView implements IView {
         this.presenter = presenter;
     }
 
-    IMVPProvider getMVPProvider() {
+    protected IMVPProvider getMVPProvider() {
         return provider;
+    }
+
+    protected void initView(){
+
+    }
+
+    protected void addEvent(){
+
     }
 
     @Override
