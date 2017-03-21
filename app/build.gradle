@@ -67,6 +67,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
 
     //权限
-    compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+//    compile 'com.github.hotchemi:permissionsdispatcher:2.3.2'
+//    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.2'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
 }

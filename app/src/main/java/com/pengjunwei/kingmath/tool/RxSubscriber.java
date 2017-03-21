@@ -2,6 +2,7 @@ package com.pengjunwei.kingmath.tool;
 
 
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 封装Subscriber
@@ -17,6 +18,11 @@ public abstract class RxSubscriber<T> implements Observer<T> {
 
     public RxSubscriber(int flag) {
         this.flag = flag;
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
     }
 
     @Override
