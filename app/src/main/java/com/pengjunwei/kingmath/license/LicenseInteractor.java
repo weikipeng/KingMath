@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.license;
 
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
+import com.pengjunwei.kingmath.tool.RxSchedulersHelper;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -14,7 +15,7 @@ public class LicenseInteractor extends BaseInteractor {
 
     private interface WebInterface {
         /***/
-        @POST("/license/verify.php")
+        @POST("/kingmath/license/verify.php")
         @FormUrlEncoded
         Observable<SLicenseVerifyResult> verify(@Field("c") String cellPhone
                 , @Field("l") String license, @Field("s") String sign);
@@ -22,15 +23,16 @@ public class LicenseInteractor extends BaseInteractor {
 
     interface Interactor {
 
-        Observable<SLicenseVerifyResult> verify(String license);
+        Observable<SLicenseVerifyResult> verify(String phoneNumber, String license);
     }
 
     public static class WebInteractor implements Interactor {
-        WebInterface webInterface = createService(WebInterface.class, "");
+        WebInterface webInterface = createService(WebInterface.class, "http://10.30.10.27");
 
         @Override
-        public Observable<SLicenseVerifyResult> verify(String license) {
-            return webInterface.verify("", license, "");
+        public Observable<SLicenseVerifyResult> verify(String phoneNumber, String license) {
+            return webInterface.verify(phoneNumber, license, "112233")
+                    .compose(RxSchedulersHelper.<SLicenseVerifyResult>applyMainSchedulers());
         }
     }
 }

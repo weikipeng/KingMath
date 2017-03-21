@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.facebook.stetho.Stetho;
+import com.pengjunwei.kingmath.license.BaseInteractor;
 
 /**
  * Created by WikiPeng on 2017/3/12 11:11.
@@ -15,5 +16,6 @@ public class MainApplication extends Application {
         super.onCreate();
         TypefaceProvider.registerDefaultIconSets();
         Stetho.initializeWithDefaults(this);
+        BaseInteractor.init(this);
     }
 }

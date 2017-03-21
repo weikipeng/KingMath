@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.pengjunwei.kingmath.BaseMVPActivity;
 import com.pengjunwei.kingmath.R;
 
+import permissions.dispatcher.RuntimePermissions;
+
 /**
  * Created by WikiPeng on 2017/3/20 13:55.
  */
