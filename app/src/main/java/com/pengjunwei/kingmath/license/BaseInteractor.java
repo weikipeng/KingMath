@@ -1,7 +1,9 @@
 package com.pengjunwei.kingmath.license;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -38,9 +40,12 @@ public class BaseInteractor {
     public static final String       PARAM_V             = "v";
     public final static String       PARAM_AUTHORIZATION = "Authorization";
     public static final String       PARAM_USER_AGENT    = "User-Agent";
+    public static String sAuthorization;
 
     public static void init(Context context) {
         initUserAgent(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        BaseInteractor.sAuthorization = sharedPreferences.getString(PARAM_AUTHORIZATION, "");
     }
 
     public static <S> S createService(Class<S> serviceClass, String baseUrl) {
@@ -147,7 +152,7 @@ public class BaseInteractor {
         //添加头部信息
         request = request.newBuilder()
                 .url(httpUrl)
-//                .header(PARAM_AUTHORIZATION, RestfulClient.getOAuthKey())
+                .header(PARAM_AUTHORIZATION, sAuthorization)
                 .header(PARAM_USER_AGENT, sUserAgent)
                 .build();
 

@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.license;
 
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
+import com.pengjunwei.kingmath.pojo.SLoginResult;
 import com.pengjunwei.kingmath.tool.RxSchedulersHelper;
 
 import io.reactivex.Observable;
@@ -19,11 +20,19 @@ public class LicenseInteractor extends BaseInteractor {
         @FormUrlEncoded
         Observable<SLicenseVerifyResult> verify(@Field("c") String cellPhone
                 , @Field("l") String license, @Field("s") String sign);
+
+        /***/
+        @POST("/kingmath/user/login.php")
+        @FormUrlEncoded
+        Observable<SLoginResult> login(@Field("userName") String userName
+                , @Field("password") String password, @Field("s") String sign);
     }
 
     interface Interactor {
 
         Observable<SLicenseVerifyResult> verify(String phoneNumber, String license);
+
+        Observable<SLoginResult> login(String userName, String password);
     }
 
     public static class WebInteractor implements Interactor {
@@ -33,6 +42,12 @@ public class LicenseInteractor extends BaseInteractor {
         public Observable<SLicenseVerifyResult> verify(String phoneNumber, String license) {
             return webInterface.verify(phoneNumber, license, "112233")
                     .compose(RxSchedulersHelper.<SLicenseVerifyResult>applyMainSchedulers());
+        }
+
+        @Override
+        public Observable<SLoginResult> login(String userName, String password) {
+            return webInterface.login(userName, password, "112233")
+                    .compose(RxSchedulersHelper.<SLoginResult>applyMainSchedulers());
         }
     }
 }

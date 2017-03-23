@@ -53,6 +53,75 @@
 
     </com.beardedhen.androidbootstrap.BootstrapWell>
 
+    <com.beardedhen.androidbootstrap.BootstrapWell
+        android:id="@+id/loginLayout"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        app:bootstrapSize="xl">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/userName"
+                style="@style/TextView"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/bootstrap_brand_warning"
+                android:visibility="visible"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                tools:text="30"/>
+
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/password"
+                style="@style/TextView"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/bootstrap_brand_warning"
+                android:visibility="visible"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                tools:text="30"/>
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:text="登录"
+                app:bootstrapBrand="success"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"/>
+
+        </LinearLayout>
+
+    </com.beardedhen.androidbootstrap.BootstrapWell>
 
     <TextView
         android:id="@+id/licenseList"
