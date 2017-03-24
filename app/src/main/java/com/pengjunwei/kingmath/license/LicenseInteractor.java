@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.license;
 
+import com.pengjunwei.kingmath.pojo.SLicenseListResult;
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
 import com.pengjunwei.kingmath.pojo.SLoginResult;
 import com.pengjunwei.kingmath.tool.RxSchedulersHelper;
@@ -15,6 +16,23 @@ import retrofit2.http.POST;
 public class LicenseInteractor extends BaseInteractor {
 
     private interface WebInterface {
+        /**
+         * 创建注册码
+         */
+        @POST("/kingmath/license/create.php")
+        @FormUrlEncoded
+        Observable<SLicenseListResult> create(@Field("num") int number
+                , @Field("s") String sign);
+
+
+        /**
+         * 获取注册码
+         */
+        @POST("/kingmath/license/list.php")
+        @FormUrlEncoded
+        Observable<SLicenseListResult> getList(@Field("limit") int limit, @Field("offset") int offset
+                , @Field("s") String sign);
+
         /***/
         @POST("/kingmath/license/verify.php")
         @FormUrlEncoded
@@ -30,6 +48,14 @@ public class LicenseInteractor extends BaseInteractor {
 
     interface Interactor {
 
+        Observable<SLicenseListResult> create(int number);
+
+        /**
+         * 获取注册码
+         */
+        Observable<SLicenseListResult> getList(int limit, int offset, String sign);
+
+
         Observable<SLicenseVerifyResult> verify(String phoneNumber, String license);
 
         Observable<SLoginResult> login(String userName, String password);
@@ -37,6 +63,17 @@ public class LicenseInteractor extends BaseInteractor {
 
     public static class WebInteractor implements Interactor {
         WebInterface webInterface = createService(WebInterface.class, "http://10.30.10.27");
+
+        @Override
+        public Observable<SLicenseListResult> create(int number) {
+            return webInterface.create(number, "1122");
+        }
+
+        @Override
+        public Observable<SLicenseListResult> getList(int limit, int offset, String sign) {
+            return webInterface.getList(limit, offset, sign).compose(RxSchedulersHelper
+                    .<SLicenseListResult>applyMainSchedulers());
+        }
 
         @Override
         public Observable<SLicenseVerifyResult> verify(String phoneNumber, String license) {

@@ -13,6 +13,8 @@ import android.util.Base64;
 import android.widget.Toast;
 
 import com.pengjunwei.kingmath.mvp.activity.BaseActivityPresenter;
+import com.pengjunwei.kingmath.pojo.SLicense;
+import com.pengjunwei.kingmath.pojo.SLicenseListResult;
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
 import com.pengjunwei.kingmath.pojo.SLoginResult;
 import com.pengjunwei.kingmath.tool.FOpenLog;
@@ -30,6 +32,8 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
 
     protected LicenseInteractor.Interactor mInteractor;
     protected SharedPreferences            mSharedPreferences;
+    protected int                          pageSize;
+    protected int                          pageIndex;
 
     public LicensePresenter(Activity activity) {
         super(activity);
@@ -108,6 +112,8 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
                     e.printStackTrace();
                 }
                 FOpenLog.e("deResult===>" + deResult);
+
+                showLicenseList();
                 return;
             }
         }
@@ -117,7 +123,24 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
 
     @Override
     public void showLicenseList() {
+        mInteractor.getList(pageSize, pageIndex * pageSize, "").subscribe(new RxSubscriber<SLicenseListResult>() {
+            @Override
+            public void onNext(SLicenseListResult result) {
+                if (result == null) {
+                    result = new SLicenseListResult();
+                }
+                String showText = "";
+                if (result.handleEmpty()) {
+                    showText = "当前注册码为空";
+                } else {
+                    for (SLicense item : result.licenseList) {
+                        showText += item.key + "\n";
+                    }
+                }
 
+                ((ILicenseView) mvpView).showLicenseList(true, showText);
+            }
+        });
     }
 
     protected void verifyWithPermission(String license) {

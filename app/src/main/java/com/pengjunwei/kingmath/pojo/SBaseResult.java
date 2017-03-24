@@ -10,9 +10,12 @@ public class SBaseResult {
      * errCode : -1
      * errMsg : 注册码不存在
      */
-
     @SerializedName("errCode")
-    public int errCode;
+    public int    errCode;
     @SerializedName("errMsg")
     public String errMsg;
+
+    public boolean handleEmpty() {
+        return false;
+    }
 }

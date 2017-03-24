@@ -11,12 +11,14 @@ import com.pengjunwei.kingmath.mvp.IMVPProvider;
 import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.tool.RxSubscriber;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by WikiPeng on 2017/3/20 14:05.
  */
-public class LicenseView extends BaseMVPView implements View.OnClickListener {
+public class LicenseView extends BaseMVPView implements View.OnClickListener, ILicenseView {
 
     protected View loginLayout;
 
@@ -26,6 +28,10 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener {
 
     protected EditText licenseEditText;
     protected TextView btnAction;
+
+
+    //注册码列表
+    protected TextView licenseListTextView;
 
 
     public <T extends IPresenter> LicenseView(IMVPProvider provider, T presenter) {
@@ -44,6 +50,7 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener {
 
         licenseEditText = getMVPProvider().findViewById(R.id.license);
         btnAction = getMVPProvider().findViewById(R.id.doAction);
+        licenseListTextView = getMVPProvider().findViewById(R.id.licenseList);
     }
 
     @Override
@@ -87,6 +94,15 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener {
                     ((ILicensePresenter) presenter).login(userNameText, passwordText);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void showLicenseList(boolean isShow, String showText) {
+        if (isShow) {
+            loginLayout.setVisibility(View.GONE);
+            licenseListTextView.setVisibility(View.VISIBLE);
+            licenseListTextView.setText(showText);
         }
     }
 }

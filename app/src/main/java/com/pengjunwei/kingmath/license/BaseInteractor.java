@@ -141,13 +141,9 @@ public class BaseInteractor {
         //先拼Url，如果是Get请求，需要把签名加上，并且每个请求加上版本号信息
         HttpUrl         httpUrl        = request.url();
         HttpUrl.Builder httpUrlBuilder = httpUrl.newBuilder();
-        if ("GET".equalsIgnoreCase(request.method())) {
-            httpUrlBuilder.addQueryParameter(PARAM_V, VERSION_NAME);
-//            httpUrlBuilder.addQueryParameter(HttpManager.PARAM_API_KEY, HttpManager.getOAuthKey());
-        }
+        httpUrlBuilder.addQueryParameter(PARAM_V, VERSION_NAME);
 
         httpUrl = httpUrlBuilder.build();
-
 
         //添加头部信息
         request = request.newBuilder()
