@@ -9,4 +9,6 @@ public interface ILicensePresenter {
     void showLicenseList();
 
     void onBtnActionClick(String text);
+
+    void createLicense(String corporation, String num);
 }

@@ -88,21 +88,25 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
         mInteractor.getList(pageSize, pageIndex * pageSize, "").subscribe(new RxSubscriber<SLicenseListResult>() {
             @Override
             public void onNext(SLicenseListResult result) {
-                if (result == null) {
-                    result = new SLicenseListResult();
-                }
-                String showText = "";
-                if (result.handleEmpty()) {
-                    showText = "当前注册码为空";
-                } else {
-                    for (SLicense item : result.licenseList) {
-                        showText += item.key + "\n";
-                    }
-                }
-
-                ((ILicenseView) mvpView).showLicenseList(true, showText);
+                handleLicenseListResult(result);
             }
         });
+    }
+
+    protected void handleLicenseListResult(SLicenseListResult result) {
+        if (result == null) {
+            result = new SLicenseListResult();
+        }
+        String showText = "";
+        if (result.handleEmpty()) {
+            showText = "当前注册码为空";
+        } else {
+            for (SLicense item : result.licenseList) {
+                showText += item.key + "\n";
+            }
+        }
+
+        ((ILicenseView) mvpView).showLicenseList(true, showText);
     }
 
     protected void verifyWithPermission(String license) {
@@ -116,15 +120,12 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
 
         mInteractor.verify(phoneNumber, license).subscribe(new RxSubscriber<SLicenseVerifyResult>() {
             @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
             public void onNext(SLicenseVerifyResult result) {
                 if (result != null) {
                     FOpenLog.e("result===>" + BaseInteractor.sGson.toJson(result));
                 }
+
+                handleLicenseListResult(result);
             }
         });
     }
@@ -140,6 +141,33 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
         } else {
             verify(text);
         }
+    }
+
+    @Override
+    public void createLicense(String corporation, String num) {
+        boolean isValid = false;
+        if (TextUtils.isEmpty(corporation)) {
+            provider.showToast("请输入公司名称");
+        } else if (TextUtils.isEmpty(num)) {
+            provider.showToast("请输入需要生成的个数");
+        } else if (!TextUtils.isDigitsOnly(num)) {
+            provider.showToast("生成的个数必须要为数字");
+        } else {
+            isValid = true;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        mInteractor.create(corporation, Integer.parseInt(num)).subscribe(new RxSubscriber<SLicenseListResult>() {
+            @Override
+            public void onNext(SLicenseListResult result) {
+                if (result != null) {
+                    FOpenLog.e("result===>" + BaseInteractor.sGson.toJson(result));
+                }
+            }
+        });
     }
 
     @Override

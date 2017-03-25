@@ -59,9 +59,15 @@
         android:layout_height="wrap_content"
         android:layout="@layout/layout_login"/>
 
+    <ViewStub
+        android:id="@+id/licenseCreateViewStub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout="@layout/layout_license_create"/>
+
     <TextView
         android:id="@+id/licenseList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 </LinearLayout>

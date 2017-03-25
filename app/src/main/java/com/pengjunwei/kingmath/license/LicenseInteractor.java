@@ -21,7 +21,7 @@ public class LicenseInteractor extends BaseInteractor {
          */
         @POST("/kingmath/license/create.php")
         @FormUrlEncoded
-        Observable<SLicenseListResult> create(@Field("num") int number
+        Observable<SLicenseListResult> create(@Field("c") String corporation, @Field("num") int number
                 , @Field("s") String sign);
 
 
@@ -42,7 +42,7 @@ public class LicenseInteractor extends BaseInteractor {
 
     interface Interactor {
 
-        Observable<SLicenseListResult> create(int number);
+        Observable<SLicenseListResult> create(String corporation, int number);
 
         /**
          * 获取注册码
@@ -57,8 +57,8 @@ public class LicenseInteractor extends BaseInteractor {
         WebInterface webInterface = createService(WebInterface.class, BASE_URL);
 
         @Override
-        public Observable<SLicenseListResult> create(int number) {
-            return webInterface.create(number, "1122");
+        public Observable<SLicenseListResult> create(String corporation, int number) {
+            return webInterface.create(corporation, number, "1122").compose(RxSchedulersHelper.<SLicenseListResult>applyMainSchedulers());
         }
 
         @Override

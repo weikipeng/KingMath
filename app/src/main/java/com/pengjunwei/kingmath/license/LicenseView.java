@@ -1,6 +1,7 @@
 package com.pengjunwei.kingmath.license;
 
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener, IL
         licenseEditText = getMVPProvider().findViewById(R.id.license);
         btnAction = getMVPProvider().findViewById(R.id.doAction);
         licenseListTextView = getMVPProvider().findViewById(R.id.licenseList);
+
+        licenseCreateViewStub = getMVPProvider().findViewById(R.id.licenseCreateViewStub);
     }
 
     @Override
@@ -75,8 +78,15 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener, IL
                 ((IView) mLoginView).show(false);
             }
 
+            initCreateLicenseView();
+            licenseCreateLayout.setVisibility(View.VISIBLE);
+
             licenseListTextView.setVisibility(View.VISIBLE);
             licenseListTextView.setText(showText);
+        } else {
+            if (licenseCreateLayout != null) {
+                licenseCreateLayout.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -84,6 +94,36 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener, IL
     public void setLoginView(IView loginView) {
         if (loginView instanceof ILoginView) {
             this.mLoginView = (ILoginView) loginView;
+        }
+    }
+
+
+    //----------------------------------------------------------------
+    //--------------------------------注释--------------------------------
+    //----------------------------------------------------------------
+    protected ViewStub licenseCreateViewStub;
+    protected View     licenseCreateLayout;
+    protected EditText corporation;
+    protected EditText createNum;
+    protected TextView btnCreate;
+
+    protected void initCreateLicenseView() {
+        if (licenseCreateLayout == null) {
+            licenseCreateLayout = licenseCreateViewStub.inflate();
+            corporation = (EditText) licenseCreateLayout.findViewById(R.id.corporationName);
+            createNum = (EditText) licenseCreateLayout.findViewById(R.id.createNumber);
+            btnCreate = (TextView) licenseCreateLayout.findViewById(R.id.createLicense);
+
+            btnCreate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (presenter instanceof ILicensePresenter) {
+                        String corporationText = corporation.getText().toString();
+                        String numText         = createNum.getText().toString();
+                        ((ILicensePresenter) presenter).createLicense(corporationText, numText);
+                    }
+                }
+            });
         }
     }
 }
