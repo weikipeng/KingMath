@@ -4,36 +4,39 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.widget.Toast;
 
+import com.pengjunwei.kingmath.R;
+import com.pengjunwei.kingmath.base.BaseInteractor;
+import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.activity.BaseActivityPresenter;
 import com.pengjunwei.kingmath.pojo.SLicense;
 import com.pengjunwei.kingmath.pojo.SLicenseListResult;
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
-import com.pengjunwei.kingmath.pojo.SLoginResult;
 import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.tool.RxSubscriber;
+import com.pengjunwei.kingmath.user.ILoginPresenter;
+import com.pengjunwei.kingmath.user.LoginListener;
+import com.pengjunwei.kingmath.user.LoginPresenter;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import java.io.UnsupportedEncodingException;
 
 import io.reactivex.disposables.Disposable;
 
 /**
  * Created by WikiPeng on 2017/3/20 13:56.
  */
-public class LicensePresenter extends BaseActivityPresenter implements ILicensePresenter {
+public class LicensePresenter extends BaseActivityPresenter implements ILicensePresenter, LoginListener {
 
     protected LicenseInteractor.Interactor mInteractor;
-    protected SharedPreferences            mSharedPreferences;
-    protected int                          pageSize;
-    protected int                          pageIndex;
+
+    protected int pageSize;
+    protected int pageIndex;
+
+    //-----
+    protected ILoginPresenter mLoginPresenter;
 
     public LicensePresenter(Activity activity) {
         super(activity);
@@ -44,7 +47,10 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
 
     @Override
     protected void initData() {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(provider.getActivity());
+        mLoginPresenter = new LoginPresenter(getProvider().fromViewStub(R.id.loginViewStub));
+        mLoginPresenter.setLoginListener(this);
+        ((ILicenseView) mvpView).setLoginView(((IPresenter) mLoginPresenter).getMVPView());
+
         mInteractor = new LicenseInteractor.WebInteractor();
     }
 
@@ -75,50 +81,6 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
 
 
         return true;
-    }
-
-    @Override
-    public void login(String userName, String password) {
-        if (TextUtils.isEmpty(userName)) {
-            Toast.makeText(provider.getActivity(), "请输入用户名", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(provider.getActivity(), "请输入密码", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mInteractor.login(userName, password).subscribe(new RxSubscriber<SLoginResult>() {
-
-            @SuppressLint("CommitPrefEdits")
-            @Override
-            public void onNext(SLoginResult result) {
-                handleLoginResult(result);
-            }
-        });
-    }
-
-    protected void handleLoginResult(SLoginResult result) {
-        if (result != null) {
-            FOpenLog.e("result===>" + BaseInteractor.sGson.toJson(result));
-            if (!TextUtils.isEmpty(result.res)) {
-                mSharedPreferences.edit().putString(BaseInteractor.PARAM_AUTHORIZATION, result.res).apply();
-                BaseInteractor.sAuthorization = result.res;
-                String deResult = null;
-                try {
-                    deResult = new String(Base64.decode(result.res, Base64.NO_WRAP), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                FOpenLog.e("deResult===>" + deResult);
-
-                showLicenseList();
-                return;
-            }
-        }
-
-        Toast.makeText(provider.getActivity(), "登录失败，请重试", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -167,8 +129,22 @@ public class LicensePresenter extends BaseActivityPresenter implements ILicenseP
         });
     }
 
-    public boolean isLogin() {
-        return mSharedPreferences.contains(BaseInteractor.PARAM_AUTHORIZATION);
+    @Override
+    public void onBtnActionClick(String text) {
+        if ("math".equalsIgnoreCase(text)) {
+            if (mLoginPresenter.isLogin()) {
+                showLicenseList();
+            } else {
+                ((IPresenter) mLoginPresenter).getMVPView().show(true);
+            }
+        } else {
+            verify(text);
+        }
     }
 
+    @Override
+    public void onLogin(boolean isSuccess) {
+        ((IPresenter) mLoginPresenter).getMVPView().show(false);
+        showLicenseList();
+    }
 }

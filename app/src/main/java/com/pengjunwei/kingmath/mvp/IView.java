@@ -5,4 +5,6 @@ package com.pengjunwei.kingmath.mvp;
  */
 public interface IView {
     <T extends IPresenter> void setPresenter(T presenter);
+
+    void show(boolean isShow);
 }

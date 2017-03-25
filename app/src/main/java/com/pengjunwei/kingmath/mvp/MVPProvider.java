@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Toast;
 
 /**
@@ -12,7 +13,9 @@ import android.widget.Toast;
  */
 public class MVPProvider implements IMVPProvider {
     protected View     view;
+    protected ViewStub viewStub;
     protected Activity mActivity;
+    protected boolean  isViewStub;
 
     public MVPProvider(Activity activity) {
         view = activity.getWindow().getDecorView().findViewById(android.R.id.content);
@@ -27,6 +30,35 @@ public class MVPProvider implements IMVPProvider {
         }
     }
 
+    protected MVPProvider(View parentView, ViewStub viewStub) {
+        this.viewStub = viewStub;
+        Context context = viewStub.getContext();
+        if (context instanceof Activity) {
+            mActivity = (Activity) context;
+        }
+        isViewStub = true;
+    }
+
+    public IMVPProvider fromViewStub(@IdRes int viewStubId) {
+        return new MVPProvider(view, (ViewStub) findViewById(viewStubId));
+    }
+
+    public IMVPProvider fromViewStub(ViewStub viewStub) {
+        return new MVPProvider(view, viewStub);
+    }
+
+    @Override
+    public boolean isViewStub() {
+        return isViewStub;
+    }
+
+    public boolean initViewStub() {
+        if (view == null && viewStub != null) {
+            view = viewStub.inflate();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public Activity getActivity() {
@@ -72,5 +104,17 @@ public class MVPProvider implements IMVPProvider {
     @Override
     public void showToast(@StringRes int textResId) {
         Toast.makeText(mActivity, textResId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void show(boolean isShow) {
+        if (view != null) {
+            view.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        } else if (isShow) {
+            initViewStub();
+            if (view != null) {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.facebook.stetho.Stetho;
-import com.pengjunwei.kingmath.license.BaseInteractor;
+import com.pengjunwei.kingmath.base.BaseInteractor;
 
 /**
  * Created by WikiPeng on 2017/3/12 11:11.

@@ -32,4 +32,9 @@ public class BaseMVPView implements IView {
     public <T extends IPresenter> void setPresenter(T presenter) {
         this.presenter = presenter;
     }
+
+    @Override
+    public void show(boolean isShow) {
+        provider.show(isShow);
+    }
 }

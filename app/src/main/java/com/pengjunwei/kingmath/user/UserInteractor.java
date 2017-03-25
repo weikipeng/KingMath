@@ -1,8 +1,9 @@
-package com.pengjunwei.kingmath.license;
+package com.pengjunwei.kingmath.user;
 
 import com.pengjunwei.kingmath.base.BaseInteractor;
 import com.pengjunwei.kingmath.pojo.SLicenseListResult;
 import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
+import com.pengjunwei.kingmath.pojo.SLoginResult;
 import com.pengjunwei.kingmath.tool.RxSchedulersHelper;
 
 import io.reactivex.Observable;
@@ -11,9 +12,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- * Created by WikiPeng on 2017/3/20 11:21.
+ * Created by WikiPeng on 2017/3/24 13:47.
  */
-public class LicenseInteractor extends BaseInteractor {
+public class UserInteractor extends BaseInteractor {
 
     private interface WebInterface {
         /**
@@ -38,39 +39,25 @@ public class LicenseInteractor extends BaseInteractor {
         @FormUrlEncoded
         Observable<SLicenseVerifyResult> verify(@Field("c") String cellPhone
                 , @Field("l") String license, @Field("s") String sign);
+
+        /***/
+        @POST("/kingmath/user/login.php")
+        @FormUrlEncoded
+        Observable<SLoginResult> login(@Field("userName") String userName
+                , @Field("password") String password, @Field("s") String sign);
     }
 
     interface Interactor {
-
-        Observable<SLicenseListResult> create(int number);
-
-        /**
-         * 获取注册码
-         */
-        Observable<SLicenseListResult> getList(int limit, int offset, String sign);
-
-
-        Observable<SLicenseVerifyResult> verify(String phoneNumber, String license);
+        Observable<SLoginResult> login(String userName, String password);
     }
 
     public static class WebInteractor implements Interactor {
         WebInterface webInterface = createService(WebInterface.class, BASE_URL);
 
         @Override
-        public Observable<SLicenseListResult> create(int number) {
-            return webInterface.create(number, "1122");
-        }
-
-        @Override
-        public Observable<SLicenseListResult> getList(int limit, int offset, String sign) {
-            return webInterface.getList(limit, offset, sign).compose(RxSchedulersHelper
-                    .<SLicenseListResult>applyMainSchedulers());
-        }
-
-        @Override
-        public Observable<SLicenseVerifyResult> verify(String phoneNumber, String license) {
-            return webInterface.verify(phoneNumber, license, "112233")
-                    .compose(RxSchedulersHelper.<SLicenseVerifyResult>applyMainSchedulers());
+        public Observable<SLoginResult> login(String userName, String password) {
+            return webInterface.login(userName, password, "112233")
+                    .compose(RxSchedulersHelper.<SLoginResult>applyMainSchedulers());
         }
     }
 }

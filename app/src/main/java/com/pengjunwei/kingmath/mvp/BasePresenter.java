@@ -22,7 +22,11 @@ public class BasePresenter implements IPresenter {
         provider = new MVPProvider(view);
     }
 
-    protected void initData(){
+    public BasePresenter(IMVPProvider provider) {
+        this.provider = provider;
+    }
+
+    protected void initData() {
 
     }
 
@@ -44,6 +48,11 @@ public class BasePresenter implements IPresenter {
     @Override
     public <T extends IView> void setMVPView(T view) {
         mvpView = view;
+    }
+
+    @Override
+    public <V extends IView> V getMVPView() {
+        return (V) mvpView;
     }
 
     @Override

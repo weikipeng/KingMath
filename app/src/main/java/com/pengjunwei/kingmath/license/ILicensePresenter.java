@@ -6,9 +6,7 @@ package com.pengjunwei.kingmath.license;
 public interface ILicensePresenter {
     boolean verify(String license);
 
-    boolean isLogin();
-
-    void login(String userName, String password);
-
     void showLicenseList();
+
+    void onBtnActionClick(String text);
 }
