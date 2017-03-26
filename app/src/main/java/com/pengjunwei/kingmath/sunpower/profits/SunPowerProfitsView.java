@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.sunpower.profits;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.pengjunwei.kingmath.R;
@@ -13,6 +14,8 @@ import com.xw.repo.BubbleSeekBar;
  * Created by WikiPeng on 2017/3/11 18:34.
  */
 public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowerProfitsView {
+
+    protected TextView mBtnRedo;
 
 //    protected TextView mSelfProfit;
 
@@ -33,6 +36,7 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
     @Override
     protected void initView() {
         super.initView();
+        mBtnRedo = provider.findViewById(R.id.redo);
 //        mSelfProfit = provider.findViewById(R.id.selfUseProfits);
 //        mSeekBarPercent = provider.findViewById(R.id.seekBarPercent);
 //        mSeekBar = provider.findViewById(R.id.seekBar);
@@ -60,6 +64,12 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
 //                ((ISunPowerProfitsPresenter) presenter).updateSelfUsePercent(progress);
 //            }
 //        });
+        mBtnRedo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                provider.getActivity().finish();
+            }
+        });
     }
 
     @Override

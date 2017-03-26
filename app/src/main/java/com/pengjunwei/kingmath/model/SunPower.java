@@ -237,7 +237,7 @@ public class SunPower implements Parcelable {
         factorInfoList.add(new FactorInfo("bankAnnualInterestRate", "银行贷款利率:", bankAnnualInterestRate, "%"));
         factorInfoList.add(new FactorInfo("bankLoanCycle", "银行贷款周期:", bankLoanCycle, "年"));
 
-        factorInfoList.add(new FactorInfo("selfUsePercent", "自用比例:", (int) (selfUsePercent * 100), "%"));
+//        factorInfoList.add(new FactorInfo("selfUsePercent", "自用比例:", (int) (selfUsePercent * 100), "%"));
 
         return factorInfoList;
     }
