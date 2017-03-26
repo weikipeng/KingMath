@@ -1,10 +1,16 @@
 package com.pengjunwei.kingmath.model;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.pengjunwei.kingmath.viewholder.ViewHolderGridItem;
 import com.pengjunwei.kingmath.viewholder.ViewHolderItem3;
+import com.pengjunwei.kingmath.viewholder.ViewHolderLineChart;
 import com.pengjunwei.kingmath.viewholder.ViewHolderResult2;
 
 import org.apache.poi.ss.formula.functions.FinanceLib;
@@ -126,7 +132,7 @@ public class SunPower implements Parcelable {
      */
     public float getInstalledCapacity() {
 //        装机容量（瓦）=额定功率*多晶硅板的数量
-        return ratedPower * number;
+        return round(ratedPower * number);
     }
 
     /**
@@ -136,18 +142,22 @@ public class SunPower implements Parcelable {
         float result            = 0;
         float installedCapacity = getInstalledCapacity();
         result = installedCapacity * factorAnnualPowerGeneration;
-        return result;
+        return round(result);
     }
 
     /**
      * 投资造价=装机容量*单价
      */
     public float getInvestmentCost() {
-        return getInstalledCapacity() * unitPriceCost;
+        return round(getInstalledCapacity() * unitPriceCost);
     }
 
     public float getProfitPercent() {
         return 0;
+    }
+
+    public static final float round(float value) {
+        return Math.round(value * 100) / 100;
     }
 
     //----------------------------------------------------------------
@@ -179,7 +189,7 @@ public class SunPower implements Parcelable {
 
         result = annualPowerGeneration * (countryAllowance + provinceAllowance + countryElectricityGridPrice);
 
-        return result;
+        return round(result);
     }
 
     //----------------------------------------------------------------
@@ -202,7 +212,7 @@ public class SunPower implements Parcelable {
                 + (annualPowerGeneration - selfUse) * (countryAllowance + provinceAllowance + countryElectricityGridPrice)
         ;
 
-        return result;
+        return round(result);
     }
 
     transient protected List<Object> factorInfoList;
@@ -227,7 +237,7 @@ public class SunPower implements Parcelable {
         factorInfoList.add(new FactorInfo("bankAnnualInterestRate", "银行贷款利率:", bankAnnualInterestRate, "%"));
         factorInfoList.add(new FactorInfo("bankLoanCycle", "银行贷款周期:", bankLoanCycle, "年"));
 
-        factorInfoList.add(new FactorInfo("selfUsePercent", "自用比例:", selfUsePercent * 100, "%"));
+        factorInfoList.add(new FactorInfo("selfUsePercent", "自用比例:", (int) (selfUsePercent * 100), "%"));
 
         return factorInfoList;
     }
@@ -249,7 +259,7 @@ public class SunPower implements Parcelable {
         data1.resultShowInfoList = new ArrayList<>();
 
         data1.resultShowInfoList.add(new ResultShowInfo("", "板数:", number, "块"));
-        data1.resultShowInfoList.add(new ResultShowInfo("", "装机容量:", getInstalledCapacity() / 1000f, "千瓦"));
+        data1.resultShowInfoList.add(new ResultShowInfo("", "装机容量:", round(getInstalledCapacity() / 1000f), "千瓦"));
         data1.resultShowInfoList.add(new ResultShowInfo("", "投资造价:", getInvestmentCost(), "元"));
         data1.resultShowInfoList.add(new ResultShowInfo("", "年发电量:", getAnnualPowerGeneration(), "度"));
         resultInfoList.add(data1);
@@ -257,7 +267,7 @@ public class SunPower implements Parcelable {
         //----------------------------------------------------------------
         //--------------------------------银行贷款--------------------------------
         //----------------------------------------------------------------
-        double               pmtMonth = pmt();
+        double                 pmtMonth = pmt();
         ViewHolderResult2.Data pmtData  = new ViewHolderResult2.Data();
         pmtData.resultShowInfoList = new ArrayList<>();
         pmtData.name = "银行贷款" + bankLoanCycle + "年";
@@ -279,8 +289,15 @@ public class SunPower implements Parcelable {
 
         resultInfoList.add(data);
 
+        //----------------------------------------------------------------
+        //--------------------------------自发自用收益--------------------------------
+        //----------------------------------------------------------------
+        ViewHolderItem3.Data selfData = new ViewHolderItem3.Data();
+        selfData.resultShowInfoList = new ArrayList<>();
+        selfData.name = "自发自用收益";
+        selfData.resultShowInfoList.add(new ViewHolderLineChart.Data(this));
 
-
+        resultInfoList.add(selfData);
 
 
 //        resultInfoList.add(new ResultShowInfo("", "月供:", pmtMonth, "元/月"));
@@ -297,6 +314,32 @@ public class SunPower implements Parcelable {
     }
 
     public SunPower() {
+    }
+
+    public LineData getLineChartData() {
+        ArrayList<Entry> e1 = new ArrayList<>();
+
+        for (int i = 0; i <= 100; i+=5) {
+            this.selfUsePercent = i / 100f;
+            e1.add(new Entry(i, getProfitsUseSelf()));
+        }
+
+        LineDataSet d1 = new LineDataSet(e1, "");
+        d1.setValueTextColor(Color.RED);
+        d1.setColor(Color.GREEN);
+        d1.setFillColor(Color.WHITE);
+        d1.setHighLightColor(Color.YELLOW);
+        d1.setCircleColor(Color.MAGENTA);
+
+        d1.setLineWidth(2.5f);
+        d1.setCircleRadius(4.5f);
+        d1.setHighLightColor(Color.rgb(244, 117, 117));
+        d1.setDrawValues(false);
+
+        ArrayList<ILineDataSet> sets = new ArrayList<>();
+        sets.add(d1);
+
+        return new LineData(sets);
     }
 
     @Override

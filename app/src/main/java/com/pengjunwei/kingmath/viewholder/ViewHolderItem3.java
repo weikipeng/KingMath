@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.model.FactorInfo;
-import com.pengjunwei.kingmath.model.ResultShowInfo;
 import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.IViewParam;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerAdapter;
@@ -111,10 +110,10 @@ public class ViewHolderItem3 extends BaseRecyclerViewHolder {
     }
 
     public static class Data {
-        public String               name;
-        public List<ResultShowInfo> resultShowInfoList;
-        public Object               value;
-        public String               unit;
+        public String name;
+        public List   resultShowInfoList;
+        public Object value;
+        public String unit;
 
     }
 }

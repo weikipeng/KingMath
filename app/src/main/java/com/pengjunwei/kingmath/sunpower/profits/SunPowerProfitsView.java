@@ -14,13 +14,13 @@ import com.xw.repo.BubbleSeekBar;
  */
 public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowerProfitsView {
 
-    protected TextView mSelfProfit;
+//    protected TextView mSelfProfit;
 
-    protected BubbleSeekBar mSeekBar;
+//    protected BubbleSeekBar mSeekBar;
 
-    protected TextView mSeekBarPercent;
+//    protected TextView mSeekBarPercent;
 
-    protected int mOldProgress;
+//    protected int mOldProgress;
 
     public SunPowerProfitsView(IMVPProvider provider) {
         super(provider);
@@ -33,39 +33,39 @@ public class SunPowerProfitsView extends BaseRecyclerMVPView implements ISunPowe
     @Override
     protected void initView() {
         super.initView();
-        mSelfProfit = provider.findViewById(R.id.selfUseProfits);
-        mSeekBarPercent = provider.findViewById(R.id.seekBarPercent);
-        mSeekBar = provider.findViewById(R.id.seekBar);
-        mSeekBar.setShowText(true);
+//        mSelfProfit = provider.findViewById(R.id.selfUseProfits);
+//        mSeekBarPercent = provider.findViewById(R.id.seekBarPercent);
+//        mSeekBar = provider.findViewById(R.id.seekBar);
+//        mSeekBar.setShowText(true);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mSeekBar.setProgressRange(1, 100, 70f);
-        mSeekBar.setSectionCount(20);
+//        mSeekBar.setProgressRange(1, 100, 70f);
+//        mSeekBar.setSectionCount(20);
     }
 
     @Override
     protected void addEvent() {
         super.addEvent();
-        mSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
-            @Override
-            public void onProgressChanged(int progress) {
-                if (mOldProgress == progress) {
-                    return;
-                }
-                mOldProgress = progress;
-                mSeekBarPercent.setText(progress + "%");
-                ((ISunPowerProfitsPresenter) presenter).updateSelfUsePercent(progress);
-            }
-        });
+//        mSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
+//            @Override
+//            public void onProgressChanged(int progress) {
+//                if (mOldProgress == progress) {
+//                    return;
+//                }
+//                mOldProgress = progress;
+//                mSeekBarPercent.setText(progress + "%");
+//                ((ISunPowerProfitsPresenter) presenter).updateSelfUsePercent(progress);
+//            }
+//        });
     }
 
     @Override
     public void updateView(SunPower data) {
-        mSelfProfit.setText(String.valueOf(data.getProfitsUseSelf()));
-        mSeekBarPercent.setText(data.selfUsePercent * 100 + "%");
-        mSeekBar.setProgress(data.selfUsePercent * 100);
+//        mSelfProfit.setText(String.valueOf(data.getProfitsUseSelf()));
+//        mSeekBarPercent.setText(data.selfUsePercent * 100 + "%");
+//        mSeekBar.setProgress(data.selfUsePercent * 100);
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        tools:background="@color/colorBackground">
+
+        <TextView
+            android:id="@+id/selfUseTitle"
+            style="@style/TextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/paddingLeft"
+            android:layout_marginStart="@dimen/paddingLeft"
+            android:gravity="left|center_vertical"
+            android:text="自用收益:"/>
+
+        <TextView
+            android:id="@+id/unit"
+            style="@style/TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:gravity="center_vertical"
+            android:text="元"/>
+
+
+        <com.beardedhen.androidbootstrap.AwesomeTextView
+            android:id="@+id/selfUseProfits"
+            style="@style/TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/unit"
+            android:layout_toStartOf="@id/unit"
+            android:gravity="center_vertical|right"
+            app:bootstrapBrand="warning"
+            tools:text="30"/>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/item_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</merge>

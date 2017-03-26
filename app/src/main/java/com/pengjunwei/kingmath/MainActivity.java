@@ -20,6 +20,6 @@ public class MainActivity extends BaseMVPActivity {
 
         mPresenter = new SunPowerPresenter(this);
         mPresenter.refresh(true);
-        startActivity(new Intent(this, LicenseActivity.class));
+//        startActivity(new Intent(this, LicenseActivity.class));
     }
 }

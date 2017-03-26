@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pengjunwei.kingmath.R;
-import com.pengjunwei.kingmath.model.FactorInfo;
-import com.pengjunwei.kingmath.model.ResultShowInfo;
 import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.IViewParam;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerAdapter;
@@ -87,10 +85,10 @@ public class ViewHolderResult2 extends BaseRecyclerViewHolder {
 
     public void updateView(Data tData) {
 
-        if(TextUtils.isEmpty(tData.name)){
+        if (TextUtils.isEmpty(tData.name)) {
             mTopDivider.setVisibility(View.GONE);
             mTitle.setVisibility(View.GONE);
-        }else{
+        } else {
             mTopDivider.setVisibility(View.VISIBLE);
             mTitle.setVisibility(View.VISIBLE);
             mTitle.setText(tData.name);
@@ -122,10 +120,10 @@ public class ViewHolderResult2 extends BaseRecyclerViewHolder {
     }
 
     public static class Data {
-        public String               name;
-        public List<ResultShowInfo> resultShowInfoList;
-        public Object               value;
-        public String               unit;
+        public String       name;
+        public List<Object> resultShowInfoList;
+        public Object       value;
+        public String       unit;
 
     }
 }

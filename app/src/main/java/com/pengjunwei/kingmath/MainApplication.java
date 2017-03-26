@@ -1,6 +1,8 @@
 package com.pengjunwei.kingmath;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.facebook.stetho.Stetho;
@@ -17,5 +19,11 @@ public class MainApplication extends Application {
         TypefaceProvider.registerDefaultIconSets();
         Stetho.initializeWithDefaults(this);
         BaseInteractor.init(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
