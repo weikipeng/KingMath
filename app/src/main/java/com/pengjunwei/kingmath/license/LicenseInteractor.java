@@ -23,7 +23,7 @@ public class LicenseInteractor extends BaseInteractor {
                 , @Field("l") String license, @Field("s") String sign);
     }
 
-    interface Interactor {
+    public interface Interactor {
         Observable<SLicenseVerifyResult> verify(String phoneNumber, String license);
     }
 

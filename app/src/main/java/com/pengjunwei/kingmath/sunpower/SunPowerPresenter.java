@@ -1,19 +1,31 @@
 package com.pengjunwei.kingmath.sunpower;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.pengjunwei.kingmath.MainActivity;
 import com.pengjunwei.kingmath.SunPowerProfitsActivity;
+import com.pengjunwei.kingmath.base.BaseInteractor;
+import com.pengjunwei.kingmath.license.LicenseActivity;
+import com.pengjunwei.kingmath.license.LicenseDao;
+import com.pengjunwei.kingmath.license.LicenseInteractor;
 import com.pengjunwei.kingmath.model.FactorInfo;
 import com.pengjunwei.kingmath.model.SunPower;
 import com.pengjunwei.kingmath.mvp.activity.IActivityPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.IRecyclerView;
+import com.pengjunwei.kingmath.pojo.SLicenseVerifyResult;
 import com.pengjunwei.kingmath.tool.FOpenLog;
+import com.pengjunwei.kingmath.tool.RxSubscriber;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 
 /**
@@ -24,8 +36,12 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
     //----------------------------------------------------------------
     //--------------------------------注释--------------------------------
     //----------------------------------------------------------------
-    protected SunPowerDao mSunPowerDao;
-    protected SunPower    mSunPower;
+    protected SunPowerDao       mSunPowerDao;
+    protected SunPower          mSunPower;
+    protected SharedPreferences mSharedPreferences;
+    public static final String KEY_LICENSE       = "license";
+    public static final String KEY_LICENSE_VALUE = "licenseValue";
+    protected LicenseInteractor.Interactor mLicenseInteractor;
 
     public SunPowerPresenter(Activity activity) {
         super(activity);
@@ -41,6 +57,11 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
         mSunPowerDao = new SunPowerDao(provider.getActivity());
         mSunPower = mSunPowerDao.getSunPower();
+
+        //---
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(provider.getActivity());
+        mLicenseInteractor = new LicenseInteractor.WebInteractor();
+        checkLicense();
     }
 
     @Override
@@ -131,5 +152,51 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
             mSunPower = data.getParcelableExtra(MainActivity.EXTRA_DATA);
             refresh(true);
         }
+    }
+
+    protected void checkLicense() {
+        String license = mSharedPreferences.getString(KEY_LICENSE, "");
+        if (TextUtils.isEmpty(license)) {
+            startLicense();
+            return;
+        }
+
+        RxPermissions rxPermissions = new RxPermissions(provider.getActivity()); // where this is an Activity instance
+
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(new RxSubscriber<Boolean>() {
+
+                    @Override
+                    public void onNext(Boolean granted) {
+                        if (granted) {
+                            verifyLicense();
+                        }else{
+                            System.exit(0);
+                        }
+                    }
+                });
+    }
+
+    protected void verifyLicense(){
+        try {
+            String license = mSharedPreferences.getString(KEY_LICENSE, "");
+            String               licenseText  = new String(Base64.decode(license, Base64.NO_WRAP), "UTF-8");
+            SLicenseVerifyResult verifyResult = BaseInteractor.sGson.fromJson(licenseText, SLicenseVerifyResult.class);
+            String               phoneId      = LicenseDao.getPhoneId(provider.getActivity());
+            if (!TextUtils.isEmpty(phoneId) && phoneId.equals(verifyResult.cellPhone)) {
+            } else {
+                startLicense();
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            startLicense();
+            return;
+        }
+    }
+
+    protected void startLicense() {
+        Intent intent = new Intent(provider.getActivity(), LicenseActivity.class);
+        provider.getActivity().startActivity(intent);
+        provider.getActivity().finish();
     }
 }
