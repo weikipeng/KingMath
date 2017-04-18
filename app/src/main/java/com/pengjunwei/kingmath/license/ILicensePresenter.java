@@ -6,9 +6,5 @@ package com.pengjunwei.kingmath.license;
 public interface ILicensePresenter {
     boolean verify(String license);
 
-    void showLicenseList();
-
     void onBtnActionClick(String text);
-
-    void createLicense(String corporation, String num);
 }
