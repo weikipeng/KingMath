@@ -89,4 +89,7 @@ dependencies {
 
     //图表
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    //
+    compile 'com.umeng.analytics:analytics:6.1.0'
 }

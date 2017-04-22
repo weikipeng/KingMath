@@ -25,3 +25,17 @@
 #-renamesourcefileattribute SourceFile
 
 -dontwarn okhttp3.**
+
+#友盟
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keep public class com.pengjunwei.kingmath.R$*{
+public static final int *;
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

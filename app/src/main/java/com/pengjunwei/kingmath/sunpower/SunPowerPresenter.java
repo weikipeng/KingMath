@@ -24,6 +24,7 @@ import com.pengjunwei.kingmath.tool.FOpenLog;
 import com.pengjunwei.kingmath.tool.RxSubscriber;
 import com.pengjunwei.kingmath.viewholder.ViewHolderFactor;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -171,6 +172,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
                         if (granted) {
                             verifyLicense();
                         }else{
+                            MobclickAgent.onKillProcess(provider.getActivity());
                             System.exit(0);
                         }
                     }

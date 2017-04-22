@@ -10,6 +10,7 @@ import com.pengjunwei.kingmath.R;
 import com.pengjunwei.kingmath.mvp.IMVPProvider;
 import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.recyclerview.BaseRecyclerMVPView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by WikiPeng on 2017/3/11 15:42.
@@ -47,6 +48,7 @@ public class SunPowerView extends BaseRecyclerMVPView implements View.OnClickLis
     }
 
     protected void calculateSunPower() {
+        MobclickAgent.onEvent(provider.getActivity(),"calculate_SunPower");
         String valueText = mNumber.getText().toString();
         if (TextUtils.isEmpty(valueText)) {
             provider.showToast(R.string.tips_info_empty);

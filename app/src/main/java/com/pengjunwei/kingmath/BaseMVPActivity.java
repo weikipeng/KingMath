@@ -7,6 +7,7 @@ import android.util.Log;
 import com.pengjunwei.kingmath.mvp.ILifeCycleListener;
 import com.pengjunwei.kingmath.mvp.IPresenter;
 import com.pengjunwei.kingmath.mvp.activity.IActivityLifePresenter;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,12 +21,14 @@ public class BaseMVPActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         callPresenterLifeCycle();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         callPresenterLifeCycle();
     }
 
