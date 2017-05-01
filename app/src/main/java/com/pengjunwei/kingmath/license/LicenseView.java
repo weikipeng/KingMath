@@ -1,5 +1,6 @@
 package com.pengjunwei.kingmath.license;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
@@ -58,6 +59,15 @@ public class LicenseView extends BaseMVPView implements View.OnClickListener, IL
                 String text = licenseEditText.getText().toString();
                 ((ILicensePresenter) presenter).onBtnActionClick(text);
                 break;
+        }
+    }
+
+    @Override
+    public void updateClipboard(String clipboard) {
+        if (TextUtils.isEmpty(clipboard)) {
+            licenseEditText.setText("");
+        }else{
+            licenseEditText.setText(clipboard);
         }
     }
 }

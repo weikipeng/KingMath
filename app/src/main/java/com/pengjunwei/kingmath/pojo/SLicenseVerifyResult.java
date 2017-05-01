@@ -6,4 +6,5 @@ package com.pengjunwei.kingmath.pojo;
 public class SLicenseVerifyResult extends SBaseResult {
     public String licenseCode;
     public String cellPhone;
+    public String channel;
 }

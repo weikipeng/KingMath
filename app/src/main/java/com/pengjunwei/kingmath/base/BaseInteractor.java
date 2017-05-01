@@ -33,8 +33,8 @@ public class BaseInteractor {
     public static Gson sGson;
 
 //    public static final String       BASE_URL            = "http://10.30.10.27";
-//    public static final String       BASE_URL            = "http://192.168.3.5";
-    public static final String       BASE_URL            = "http://10.30.10.65";
+    public static final String       BASE_URL            = "http://192.168.3.20";
+//    public static final String       BASE_URL            = "http://10.30.10.65";
     public static       String       sUserAgent          = null;
     public static       OkHttpClient sOkHttpClient       = null;
     public static final int          REQUEST_TIMEOUT     = 30 * 1000;

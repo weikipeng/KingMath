@@ -14,6 +14,7 @@ import com.pengjunwei.kingmath.base.BaseInteractor;
 import com.pengjunwei.kingmath.license.LicenseActivity;
 import com.pengjunwei.kingmath.license.LicenseDao;
 import com.pengjunwei.kingmath.license.LicenseInteractor;
+import com.pengjunwei.kingmath.license.LicensePresenter;
 import com.pengjunwei.kingmath.model.FactorInfo;
 import com.pengjunwei.kingmath.model.SunPower;
 import com.pengjunwei.kingmath.mvp.activity.IActivityPresenter;
@@ -53,8 +54,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
 
     protected void initData() {
         mAdapter = new SunPowerAdapter(this);
-        mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class
-                , new ViewHolderFactor.LayoutProvider());
+        mAdapter.getTypeProvider().register(FactorInfo.class, ViewHolderFactor.class, new ViewHolderFactor.LayoutProvider());
         ((IRecyclerView) mvpView).setAdapter(mAdapter);
         mSunPowerDao = new SunPowerDao(provider.getActivity());
         mSunPower = mSunPowerDao.getSunPower();
@@ -125,16 +125,13 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
                 }
             }
 
-//            if (!declaredField.getType().isInstance(value))
-//                throw new IllegalArgumentException();
+            //            if (!declaredField.getType().isInstance(value))
+            //                throw new IllegalArgumentException();
 
             declaredField.set(object, value);
 
             declaredField.setAccessible(accessible);
-        } catch (NoSuchFieldException
-                | SecurityException
-                | IllegalArgumentException
-                | IllegalAccessException e) {
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -148,8 +145,7 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         FOpenLog.e("kingMathFocus debug onActivityResult ====>");
-        if (requestCode == REQUEST_CODE_CALCULATE_SUN_POWER &&
-                resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == REQUEST_CODE_CALCULATE_SUN_POWER && resultCode == Activity.RESULT_OK && data != null) {
             mSunPower = data.getParcelableExtra(MainActivity.EXTRA_DATA);
             refresh(true);
         }
@@ -164,28 +160,29 @@ public class SunPowerPresenter extends BaseRecyclerPresenter implements ISunPowe
 
         RxPermissions rxPermissions = new RxPermissions(provider.getActivity()); // where this is an Activity instance
 
-        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
-                .subscribe(new RxSubscriber<Boolean>() {
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(new RxSubscriber<Boolean>() {
 
-                    @Override
-                    public void onNext(Boolean granted) {
-                        if (granted) {
-                            verifyLicense();
-                        }else{
-                            MobclickAgent.onKillProcess(provider.getActivity());
-                            System.exit(0);
-                        }
-                    }
-                });
+            @Override
+            public void onNext(Boolean granted) {
+                if (granted) {
+                    verifyLicense();
+                } else {
+                    MobclickAgent.onKillProcess(provider.getActivity());
+                    System.exit(0);
+                }
+            }
+        });
     }
 
-    protected void verifyLicense(){
+    protected void verifyLicense() {
         try {
-            String license = mSharedPreferences.getString(KEY_LICENSE, "");
+            String               license      = mSharedPreferences.getString(KEY_LICENSE, "");
             String               licenseText  = new String(Base64.decode(license, Base64.NO_WRAP), "UTF-8");
             SLicenseVerifyResult verifyResult = BaseInteractor.sGson.fromJson(licenseText, SLicenseVerifyResult.class);
             String               phoneId      = LicenseDao.getPhoneId(provider.getActivity());
-            if (!TextUtils.isEmpty(phoneId) && phoneId.equals(verifyResult.cellPhone)) {
+            String               channel      = LicensePresenter.getChannel(provider.getActivity());
+
+            if (!TextUtils.isEmpty(phoneId) && phoneId.equals(verifyResult.cellPhone) && channel.equals(verifyResult.channel)) {
             } else {
                 startLicense();
             }
