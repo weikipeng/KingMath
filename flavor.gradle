@@ -1,0 +1,76 @@
+//----------------------------------------------------------------------------------------------------------------------------------------------
+
+ext.customFlavors = [];
+
+ext.customFlavors = this.customFlavors
+
+ext.initPublishFlavor = {
+    customFlavors.add("website")
+    for (int i = 1; i < 30; i++) {
+        customFlavors.add("b0" + i)
+    }
+}
+
+ext.initNormalFlavor = {
+    customFlavors << "website"
+}
+
+ext.initFlavor = {
+    //发布版本的情况打包
+    initPublishFlavor()
+}
+
+//清理打包分支的上次打包的临时文件
+def cleanJZBMarketApkList = { ->
+//    git show -s --format=%ci
+    String folder = rootProject.getProjectDir().getAbsolutePath() + "/marketApk"
+
+    println("cleanJZBMarketApkList ==================> " + folder)
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine 'rm', '-Rf', folder
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+
+def markJZBMarketApkFinish = { ->
+//date +%m%d%H%S > marketApk/packFinish
+    String file = rootProject.getProjectDir().getAbsolutePath() + "/marketApk/packFinish"
+
+    File cFile = new File(file)
+    if (!cFile.getParentFile().exists()) {
+        cFile.getParentFile().mkdirs()
+    }
+
+    println("markJZBMarketApkFinish ==================> " + file)
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+//        commandLine 'date', '+%m%d%H%S','>', file
+        commandLine "/bin/sh", '-c', " date +%m%d%H%S > $file"
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+task cleanJZBMarketApkFolder() << {
+    cleanJZBMarketApkList()
+}
+
+task packJZBMarketApk(dependsOn: ["assembleRelease"]) << {
+    println " ================== packMarketApkFinish createFile"
+    markJZBMarketApkFinish()
+}
+
+//"cleanJZBMarketApkFolder",
+tasks.whenTaskAdded { theTask ->
+    if (theTask.name.contains('assembleRelease')) {
+        theTask.dependsOn 'cleanJZBMarketApkFolder'
+    }
+}
+
+
+initFlavor();

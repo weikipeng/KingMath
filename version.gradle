@@ -1,0 +1,124 @@
+//apply from: rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"
+//gradle publishApkWebsiteRelease
+
+//家长帮版本名字
+ext.customVersionName = "6.3.1"
+//家长帮版本号码，必须为数字
+ext.customVersionCode = 57
+
+ext.apkName = "";
+
+//获取Git的版本号
+ext.getGitRevision = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+//获取Git的版本时间
+ext.getGitRevisionTime = { ->
+//    git show -s --format=%ci
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine 'git', 'show', '-s', '--format=%ci'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+ext.getGitUserEmail = {
+//    git config user.email
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine 'git', 'config', 'user.email'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+ext.getGitCommitInfo = {
+//    git log -1
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine 'git', 'log', '-1'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+//获取当前的分支名字 dev
+//git branch | grep -e "^*" | cut -d " " -f2
+ext.getGitCurrentBranch = {
+//    git log -1
+    def stdout = new ByteArrayOutputStream()
+    exec {
+//        commandLine 'git', 'branch', '|', 'grep', '-e', '"^*"', '|', 'cut', '-d', '" "', '-f2'
+//        commandLine 'git', 'branch', '|', 'grep', '-e', '\"\\^\\*\"'
+//        commandLine 'git', 'branch | grep \-e "^*"'
+//        commandLine 'git config user.email'
+        ignoreExitValue = true
+        commandLine "/bin/sh", '-c', ' git branch | grep -e "^*" | cut -d " " -f2'
+        standardOutput = stdout
+    }
+    ext.currentBranch = stdout.toString().trim();
+    return currentBranch
+}
+
+//获取最后提交的日期时间
+ext.getGitCommitDate = {
+    //jzb_5.4.3_dev_0922_22_09.apk
+//    git log -1 --date=format:'%Y-%m-%d' | grep "^Date*"
+//    git log -1 --date=format:'%m%d_%H%M' | grep "^Date*"
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        ignoreExitValue = true
+        commandLine "/bin/sh", '-c', ' git log -1 --date=format:\'%m%d_%H%M\' | grep "^Date*"'
+        standardOutput = stdout
+    }
+    String[] dateTextArray = stdout.toString().split(" ");
+    return dateTextArray[dateTextArray.length-1].trim()
+}
+
+
+ext.initApkName = {
+    //jzb_5.4.3_dev_0922_22_09.apk
+
+    ext.currentBranch = getGitCurrentBranch()
+
+    StringBuilder stringBuilder = new StringBuilder("JZB_")
+            .append(customVersionName)
+
+//    if (!customVersionName.equals(currentBranch)) {
+//        stringBuilder.append("_").append(getGitCurrentBranch())
+//        stringBuilder.append("_").append(getGitCommitDate())
+//    }
+
+//    apkName = "JZB_" + customVersionName + '_' + getGitCurrentBranch()
+
+    apkName = stringBuilder.toString()
+    println("apkName ===> " + apkName)
+}
+
+//当前是否可以调试
+ext.isJZBDebuggable = {
+    return "dev".equals(currentBranch)
+}
+
+//task testWei() {
+////    String text = getGitCommitDate();
+////    println("test is " + text)
+//
+//    initApkName()
+//
+//}
+
+//task featuresWaiting(type: Exec) {
+//    commandLine "bash", "-c", "'${task.project.projectDir}/show.sh' | grep \-\-\- | grep #feature''
+//}
