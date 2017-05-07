@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply from:rootProject.getRootDir().getAbsolutePath()+"/version.gradle"
-apply from:rootProject.getRootDir().getAbsolutePath()+"/flavor.gradle"
+apply from: rootProject.getRootDir().getAbsolutePath() + "/version.gradle"
+apply from: rootProject.getRootDir().getAbsolutePath() + "/flavor.gradle"
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -28,8 +28,15 @@ android {
 
     buildTypes {
         release {
+            zipAlignEnabled true
+
+            // 移除无用的resource文件
+            shrinkResources false
+            //打开混淆
             minifyEnabled false
+            //声明混淆的配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
 

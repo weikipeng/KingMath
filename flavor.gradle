@@ -6,9 +6,9 @@ ext.customFlavors = this.customFlavors
 
 ext.initPublishFlavor = {
     customFlavors.add("website")
-    for (int i = 1; i < 30; i++) {
-        customFlavors.add("b0" + i)
-    }
+//    for (int i = 1; i < 30; i++) {
+//        customFlavors.add("b0" + i)
+//    }
 }
 
 ext.initNormalFlavor = {
